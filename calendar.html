@@ -3,390 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workout Calendar - Dark Theme</title>
+    <title>Workout Planner - Night Mode</title>
     <style>
         :root {
-            --primary-color: #8a3ffc; /* Vibrant Purple */
-            --secondary-color: #33b1ff; /* Bright Blue */
-            --accent-color-dark: #1a1a2e;  /* Deep Dark Blue/Purple - Main background */
-            --surface-color: #24243e;   /* Slightly Lighter Dark - Container background */
-            --surface-color-hover: #2f2f4f; /* Hover for surfaces */
-            --text-primary: #e0e0e0;     /* Light Gray - Primary text */
-            --text-secondary: #b0b0b0;   /* Medium Gray - Secondary text / Placeholders */
-            --border-color: #40405f;     /* Border color for dark theme */
-            --highlight-color: var(--primary-color); /* For current day, active elements */
-            --danger-color: #e74c3c;
-            --danger-color-hover: #c0392b;
+            --bg-main: #111111;
+            --bg-secondary: #1a1a1a;
+            --border-color: #2e2e2e;
+            --text-primary: #f0f0f0;
+            --text-secondary: #a0a0a0;
+            --accent-primary: #0077ff;
+            --shadow-color: rgba(0, 119, 255, 0.2);
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --border-radius-lg: 16px;
+            --border-radius-md: 10px;
 
-            --border-radius: 10px;
-            --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            --box-shadow-light: 0 5px 15px rgba(var(--secondary-color-rgb, 51, 177, 255), 0.2); /* For glowing effect on hover */
-            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* NEW: High-Contrast Body Part Colors */
+            --c-chest:     #0ea5e9; /* Sky Blue */
+            --c-back:      #22c55e; /* Green */
+            --c-shoulders: #ef4444; /* Red */
+            --c-legs:      #f97316; /* Orange */
+            --c-forearm:   #d946ef; /* Fuchsia */
+            --c-core:      #eab308; /* Yellow */
+            --c-cardio:    #14b8a6; /* Teal */
+        }
 
-            /* RGB versions for box shadows with opacity */
-            --primary-color-rgb: 138, 63, 252;
-            --secondary-color-rgb: 51, 177, 255;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         body {
             font-family: var(--font-family);
             margin: 0;
-            padding: 30px 25px;
-            background: linear-gradient(135deg, var(--accent-color-dark), #10101e);
+            padding: 2rem;
+            background-color: var(--bg-main);
             color: var(--text-primary);
             display: flex;
-            justify-content: center; /* Horizontally center .page-layout */
-            align-items: center; /* Vertically center .page-layout */
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
             box-sizing: border-box;
-            overflow-x: hidden;
         }
 
-        .page-layout {
+        .container {
+            width: 100%;
+            max-width: 1200px;
             display: flex;
-            flex-direction: row;
-            align-items: flex-start; /* Align tops of the 3 columns */
-            gap: 35px; /* Gap between the three main columns */
-            width: 100%;
-            /* Routines (300) + Calendar (700) + Stats (300) + Gaps (2*35=70) = 1370px */
-            max-width: 1370px;
+            gap: 2rem;
+            animation: fadeIn 0.5s ease-out;
         }
 
-        .routines-panel,
-        .stats-container {
+        .sidebar, .main-content {
+            background-color: var(--bg-secondary);
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .sidebar {
             width: 300px;
-            min-width: 280px;
-            flex-shrink: 0;
-            background-color: var(--surface-color);
-            padding: 25px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            border: 1px solid var(--border-color);
-            box-sizing: border-box;
-            align-self: stretch; /* Make columns same height if content allows */
-        }
-
-        .main-content-wrapper { /* Calendar Area - Center */
-            width: 700px; /* Adjusted width for calendar */
             flex-shrink: 0;
         }
 
-        .container { /* Actual calendar box */
-            background-color: var(--surface-color);
-            padding: 30px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            width: 100%;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            box-sizing: border-box;
-        }
-
-        .routines-panel h3,
-        .stats-container h3 {
-            color: var(--highlight-color);
+        .sidebar h2 {
+            font-size: 1.25rem;
             margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 1.6em;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-        }
-        .routines-panel h4 { /* For "Defined Routines:" sub-header */
-            color: var(--text-secondary);
-            font-size: 1.1em;
-            margin-top: 25px;
-            margin-bottom: 10px;
-            text-align: left;
-            font-weight: 500;
+            padding-bottom: 1rem;
         }
 
-
-        #statsContent p {
+        #monthlySummary .summary-item {
             display: flex;
             align-items: center;
-            margin-bottom: 12px;
-            font-size: 0.95em;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
             color: var(--text-secondary);
         }
-        #statsContent p strong {
-            color: var(--text-primary);
-            margin-left: auto;
-            font-weight: 500;
+
+        #monthlySummary .summary-item-name {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
-        h1 { /* Calendar Title */
-            color: var(--highlight-color);
-            margin-top: 0;
-            margin-bottom: 25px;
-            font-size: 2.6em;
-            letter-spacing: 1px;
+        #monthlySummary .summary-item-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        #monthlySummary .summary-item-count {
             font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .main-content {
+            flex-grow: 1;
         }
 
         .calendar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 2rem;
         }
 
         .calendar-header button {
-            background-color: var(--secondary-color);
-            color: #fff;
-            border: none;
-            padding: 12px 20px;
-            border-radius: var(--border-radius);
+            background-color: #252525;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius-md);
             cursor: pointer;
-            font-size: 1em;
+            font-size: 0.9rem;
             font-weight: 500;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            transition: background-color 0.2s, border-color 0.2s;
         }
 
         .calendar-header button:hover {
-            background-color: var(--primary-color);
-            transform: translateY(-3px);
-            box-shadow: var(--box-shadow-light);
+            background-color: #333;
+            border-color: var(--accent-primary);
         }
 
         #monthYear {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: var(--text-primary);
+            font-size: 1.75rem;
+            font-weight: 600;
         }
 
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-        }
-
-        .calendar-day, .weekday {
-            padding: 12px;
-            border-radius: var(--border-radius);
-            text-align: center;
-            font-size: 0.95em;
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            line-height: 1.3;
-            box-sizing: border-box;
+            gap: 0.75rem;
         }
 
         .weekday {
-            font-weight: 600;
-            color: var(--secondary-color);
-            background-color: rgba(var(--secondary-color-rgb), 0.1);
-            padding: 15px 12px;
-            border: 1px solid transparent;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            padding-bottom: 0.5rem;
         }
 
         .calendar-day {
+            aspect-ratio: 1 / 1;
+            border-radius: var(--border-radius-md);
+            border: 2px solid var(--border-color);
             cursor: pointer;
-            background-color: var(--surface-color-hover);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
+            transition: border-color 0.2s, background-color 0.2s, transform 0.2s;
+            position: relative;
+            padding: 0.5rem;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: #1e1e1e;
         }
 
-        .calendar-day:not([style*="background-color"]):hover {
-            background-color: var(--border-color);
-        }
-         .calendar-day:hover {
-            transform: translateY(-3px) scale(1.03);
-            border-color: var(--secondary-color);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        .calendar-day:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-primary);
         }
 
-
-        .calendar-day.empty {
-            background-color: transparent !important;
-            cursor: default;
-            border: 1px solid transparent;
-            color: transparent;
-            box-shadow: none !important;
-        }
-        .calendar-day.empty:hover {
-            transform: none;
-            background-color: transparent !important;
-            border-color: transparent;
+        .calendar-day.today {
+            border-color: var(--accent-primary);
         }
 
-        .calendar-day.current-day {
-            font-weight: bold;
-            box-shadow: 0 0 0 2px var(--surface-color), 0 0 0 4px var(--highlight-color);
-            z-index: 1;
-        }
-         .calendar-day.current-day:hover {
-            border-color: var(--primary-color);
-        }
+        .calendar-day.empty { pointer-events: none; background: transparent; border-color: transparent; }
 
-        /* Modal Styles */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(10, 10, 20, 0.85); justify-content: center; align-items: center; }
-        .modal-content { background-color: var(--surface-color); margin: auto; padding: 30px; border-radius: var(--border-radius); box-shadow: 0 15px 35px rgba(0,0,0,0.5); width: 90%; max-width: 480px; text-align: left; animation: slideDown 0.5s ease-out; border: 1px solid var(--border-color); box-sizing: border-box;}
-        @keyframes slideDown { from { transform: translateY(-50px) scale(0.95); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
-        .modal-header h2 { margin: 0; color: var(--highlight-color); font-size: 1.8em; }
-        .close-button { color: var(--text-secondary); font-size: 2em; font-weight: bold; cursor: pointer; transition: color 0.3s ease, transform 0.2s ease; }
-        .close-button:hover, .close-button:focus { color: var(--text-primary); transform: scale(1.1); }
-        .routine-options label { display: block; margin-bottom: 10px; font-size: 1.1em; color: var(--text-primary); font-weight: 500; }
-        .routine-options select { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid var(--border-color); background-color: var(--surface-color-hover); color: var(--text-primary); border-radius: var(--border-radius); font-size: 1em; box-sizing: border-box; transition: border-color 0.3s ease, background-color 0.3s ease; }
-        .routine-options select:focus { border-color: var(--secondary-color); background-color: var(--accent-color-dark); outline: none; box-shadow: 0 0 0 2px rgba(var(--secondary-color-rgb), 0.3); }
-        .modal-actions { text-align: right; margin-top: 20px; }
-        .modal-actions button { background-color: var(--secondary-color); color: #fff; border: none; padding: 12px 22px; border-radius: var(--border-radius); cursor: pointer; font-size: 1em; font-weight: 500; transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; margin-left: 10px; }
-        .modal-actions button:hover { background-color: var(--primary-color); transform: translateY(-2px); box-shadow: var(--box-shadow-light); }
-        .modal-actions button.remove-button { background-color: var(--danger-color); }
-        .modal-actions button.remove-button:hover { background-color: var(--danger-color-hover); }
+        .date-number { font-weight: 500; text-align: left; color: var(--text-secondary);}
+        .calendar-day.today .date-number { color: var(--text-primary); }
 
-        /* Add/Edit Routine Form (inside .routines-panel) */
-        .add-routine-form { display: flex; gap: 10px; align-items: center; margin-bottom: 15px; flex-wrap: wrap; }
-        .add-routine-form input[type="text"] { flex-grow: 1; min-width: 120px; /* Adjusted for smaller panel */ padding: 12px; border: 1px solid var(--border-color); border-radius: var(--border-radius); font-size: 0.95em; background-color: var(--surface-color-hover); color: var(--text-primary); transition: border-color 0.3s ease, background-color 0.3s ease; box-sizing: border-box;}
-        .add-routine-form input[type="text"]::placeholder{ color: var(--text-secondary); opacity: 0.8; }
-        .add-routine-form input[type="text"]:focus { border-color: var(--secondary-color); background-color: var(--accent-color-dark); outline: none; box-shadow: 0 0 0 2px rgba(var(--secondary-color-rgb), 0.3); }
-        .add-routine-form input[type="color"] { padding: 0; border: 1px solid var(--border-color); border-radius: var(--border-radius); width: 44px; height: 44px; cursor: pointer; background-color: var(--surface-color-hover); transition: border-color 0.3s ease; box-sizing: border-box;}
-        .add-routine-form input[type="color"]:hover { border-color: var(--secondary-color); }
-        .add-routine-form input[type="color"]::-webkit-color-swatch-wrapper { padding: 4px; border-radius: var(--border-radius); }
-        .add-routine-form input[type="color"]::-webkit-color-swatch { border: none; border-radius: calc(var(--border-radius) - 4px); }
-        .add-routine-form input[type="color"]::-moz-color-swatch { border: none; border-radius: calc(var(--border-radius) - 4px); }
-        .add-routine-form button { background-color: var(--secondary-color); color: #fff; border: none; padding: 12px 18px; border-radius: var(--border-radius); cursor: pointer; font-size: 0.95em; font-weight: 500; transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; }
-        .add-routine-form button:hover { background-color: var(--primary-color); transform: translateY(-2px); box-shadow: var(--box-shadow-light); }
-        .add-routine-form button.cancel-edit-btn { background-color: var(--text-secondary); }
-        .add-routine-form button.cancel-edit-btn:hover { background-color: var(--border-color); }
-
-
-        #definedRoutinesList { list-style: none; padding: 0; margin-top: 10px; }
-        #definedRoutinesList li { background-color: var(--surface-color-hover); padding: 10px 15px; border-radius: var(--border-radius); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 1em; border: 1px solid var(--border-color); transition: background-color 0.3s ease, border-color 0.3s ease; color: var(--text-primary); }
-        #definedRoutinesList li:hover { background-color: var(--border-color); border-color: var(--secondary-color); }
-        #definedRoutinesList li .routine-name-display { flex-grow: 1; display: flex; align-items: center;}
-        #definedRoutinesList li .actions button { background: none; border: none; font-size: 1.2em; cursor: pointer; transition: color 0.3s ease, transform 0.2s ease; padding: 5px; margin-left: 5px;}
-        #definedRoutinesList li .actions .edit-routine-btn { color: var(--secondary-color); }
-        #definedRoutinesList li .actions .edit-routine-btn:hover { color: var(--primary-color); transform: scale(1.1); }
-        #definedRoutinesList li .actions .delete-routine-btn { color: var(--danger-color); }
-        #definedRoutinesList li .actions .delete-routine-btn:hover { color: var(--danger-color-hover); transform: scale(1.1); }
-
-        .routine-color-indicator { display: inline-block; width: 16px; height: 16px; border-radius: 50%; margin-right: 10px; border: 1px solid rgba(255,255,255,0.2); vertical-align: middle; box-shadow: 0 0 3px rgba(0,0,0,0.5); flex-shrink: 0; }
-
-        /* Responsive adjustments */
-        @media (max-width: 1380px) { /* Slightly wider than max-width of page-layout */
-            .page-layout {
-                gap: 25px;
-                max-width: 95%; /* Allow it to shrink a bit more gracefully */
-            }
-            .main-content-wrapper { width: auto; flex-grow: 1; min-width: 400px;} /* Allow calendar to be more flexible */
-            .routines-panel, .stats-container { width: 260px; min-width: 240px;}
+        .dots-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            justify-content: flex-start;
+            margin-top: auto;
+            height: 14px;
         }
 
-        @media (max-width: 980px) { /* Stack to 2 main columns then 1 */
-            .page-layout {
-                flex-direction: column;
-                align-items: center; /* Center stacked items */
-                gap: 30px;
-            }
-            .main-content-wrapper {
-                width: 100%;
-                max-width: 700px; /* Calendar max width when stacked */
-                order: 1; /* Calendar first */
-            }
-            .routines-panel {
-                width: 100%;
-                max-width: 500px; /* Routines panel max width when stacked */
-                order: 2; /* Routines below calendar */
-                align-self: center;
-            }
-            .stats-container {
-                width: 100%;
-                max-width: 500px; /* Stats panel max width when stacked */
-                order: 3; /* Stats last */
-                align-self: center;
-            }
+        .dots-container .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
         }
-         @media (max-width: 720px) { /* Adjust calendar content for smaller screens */
-             .container { padding: 20px; }
-             h1 { font-size: 2.2em;}
-             #monthYear { font-size: 1.6em;}
-             .calendar-day, .weekday { font-size: 0.9em; padding: 10px;}
-             .weekday {padding: 12px 10px;}
-             .main-content-wrapper, .routines-panel, .stats-container {
-                 max-width: 100%; /* Full width for very small screens */
-             }
+
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
+        .modal-content { background-color: var(--bg-secondary); padding: 2rem; border-radius: var(--border-radius-lg); width: 90%; max-width: 520px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        #modalDate { font-size: 1.3rem; font-weight: 600; }
+        .close-button { font-size: 1.5rem; color: var(--text-secondary); cursor: pointer; transition: color 0.2s; }
+        .close-button:hover { color: var(--text-primary); }
+
+        #workout-options { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.75rem; }
+        #workout-options .option { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: var(--border-radius-md); cursor: pointer; transition: border-color 0.2s, background-color 0.2s; }
+        #workout-options .option.selected { border-color: var(--accent-primary); background-color: rgba(0, 119, 255, 0.1); box-shadow: 0 0 10px var(--shadow-color); }
+        #workout-options .option-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+        .modal-actions { margin-top: 2rem; display: flex; justify-content: flex-end; gap: 0.75rem; }
+        .modal-actions button { font-size: 0.9rem; font-weight: 600; padding: 0.7rem 1.4rem; border-radius: var(--border-radius-md); cursor: pointer; transition: opacity 0.2s; border: none; }
+        #saveBtn { background-color: var(--accent-primary); color: white; }
+        #removeBtn { background-color: #333; color: var(--text-primary); }
+
+        @media (max-width: 900px) {
+            body { align-items: flex-start; padding: 1rem; }
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; box-sizing: border-box; }
         }
          @media (max-width: 480px) {
-            body { padding: 20px 15px; }
-            .container { padding: 15px; }
-            h1 { font-size: 1.8em; }
-            #monthYear { font-size: 1.4em; }
-            .calendar-header button { padding: 10px 15px; font-size: 0.9em;}
-            .calendar-day, .weekday { font-size: 0.8em; padding: 8px; gap: 5px;} /* Grid gap is on .calendar-grid */
-            .weekday {padding: 10px 8px;}
-            .add-routine-form { flex-direction: column; align-items: stretch;}
-            .add-routine-form input[type="text"],
-            .add-routine-form input[type="color"],
-            .add-routine-form button {
-                width: 100% !important; /* Ensure full width */
-                min-width: unset !important;
-                margin-bottom: 10px;
-            }
-            .add-routine-form input[type="color"] { height: 40px; }
-            .modal-content { padding: 20px; }
-            .routines-panel, .stats-container { padding: 15px; } /* Reduce padding on panels */
-         }
-
+            .main-content, .sidebar { padding: 1rem; }
+            #workout-options { grid-template-columns: 1fr 1fr; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="page-layout">
-        <div id="routinesPanel" class="routines-panel"> <h3 id="addEditRoutineTitle">Manage Workout Routines</h3>
-            <div class="add-routine-form">
-                <input type="text" id="newRoutineName" placeholder="Routine name (e.g., Leg Day)">
-                <input type="color" id="newRoutineColor" value="#3498db">
-                <button id="addOrUpdateRoutineBtn">Add Routine</button>
-                <button id="cancelEditBtn" class="cancel-edit-btn" style="display: none;">Cancel Edit</button>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Monthly Summary</h2>
+            <div id="monthlySummary"></div>
+        </aside>
+
+        <main class="main-content">
+            <div class="calendar-header">
+                <button id="prevMonthBtn">&larr; Previous</button>
+                <h2 id="monthYear"></h2>
+                <button id="nextMonthBtn">Next &rarr;</button>
             </div>
-            <h4>Defined Routines:</h4>
-            <ul id="definedRoutinesList">
-                </ul>
-        </div>
-
-        <div class="main-content-wrapper"> <div class="container"> <h1>Workout Calendar</h1>
-                <div class="calendar-header">
-                    <button id="prevMonthBtn">&lt; Prev</button>
-                    <div id="monthYear"></div>
-                    <button id="nextMonthBtn">Next &gt;</button>
-                </div>
-
-                <div class="calendar-grid weekdays">
-                    <div class="weekday">Sun</div>
-                    <div class="weekday">Mon</div>
-                    <div class="weekday">Tue</div>
-                    <div class="weekday">Wed</div>
-                    <div class="weekday">Thu</div>
-                    <div class="weekday">Fri</div>
-                    <div class="weekday">Sat</div>
-                </div>
-                <div class="calendar-grid" id="calendarDays">
-                    </div>
-                </div>
-        </div>
-
-        <div id="statsContainer" class="stats-container"> <h3>Monthly Statistics</h3>
-            <div id="statsContent">
-                <p>Loading stats...</p>
+            <div class="calendar-grid weekdays">
+                <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
             </div>
-        </div>
+            <div class="calendar-grid" id="calendarDays"></div>
+        </main>
     </div>
 
-    <div id="routineModal" class="modal">
+    <div id="logModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modalDate">Select Routine for</h2>
-                <span class="close-button" id="closeModalBtn">&times;</span>
+                <h3 id="modalDate"></h3>
+                <span id="closeModalBtn" class="close-button">&times;</span>
             </div>
-            <div class="routine-options">
-                <label for="routineSelect">Choose a workout routine:</label>
-                <select id="routineSelect">
-                    </select>
-            </div>
+            <div id="workout-options"></div>
             <div class="modal-actions">
-                <button id="saveRoutineBtn">Save Workout</button>
-                <button id="removeRoutineBtn" class="remove-button">Remove Workout</button>
+                <button id="removeBtn">Clear Day</button>
+                <button id="saveBtn">Save</button>
             </div>
         </div>
     </div>
