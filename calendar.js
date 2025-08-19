@@ -25,6 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'Forearm':   { color: 'var(--c-forearm)' },
         'Core':      { color: 'var(--c-core)' },
         'Cardio':    { color: 'var(--c-cardio)' },
+        'Triceps': { color: '#e91e63' }, // Pink
+        'Biceps': { color: '#3f51b5' }, // Indigo
+        'Stretching': { color: '#ffeb3b' }, // Bright Yellow
     };
 
     const saveToLocalStorage = () => {
