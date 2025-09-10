@@ -6,7 +6,7 @@ A beautiful, modern single-page web application for tracking your workout routin
 
 **Try it now:** [https://workoutcalendar.pages.dev/](https://workoutcalendar.pages.dev/)
 
-*Experience the full functionality without any installation - just click and start tracking your workouts!*
+_Experience the full functionality without any installation - just click and start tracking your workouts!_
 
 ![FitTracker Screenshot](screenshot.png)
 

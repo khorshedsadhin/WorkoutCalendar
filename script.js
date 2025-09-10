@@ -25,13 +25,13 @@ class FitTracker {
 
   initializeExampleRoutines() {
     const exampleRoutines = [
-      { id: "strength", name: "💪 Strength Training", color: "#3b82f6" }, // Blue
-      { id: "cardio", name: "🏃 Cardio Blast", color: "#10b981" }, // Green
-      { id: "yoga", name: "🧘 Yoga Flow", color: "#8b5cf6" }, // Purple
-      { id: "hiit", name: "🔥 HIIT Training", color: "#ef4444" }, // Red
-      { id: "stretching", name: "🤸 Stretching", color: "#f59e0b" }, // Amber
-      { id: "swimming", name: "🏊 Swimming", color: "#06b6d4" }, // Cyan
-      { id: "rest", name: "😴 Rest Day", color: "#6b7280" }, // Gray
+      { id: "strength", name: "💪 Strength Training", color: "#3b82f6" }, // Blue -> Light green in GitHub theme
+      { id: "cardio", name: "🏃 Cardio Blast", color: "#10b981" }, // Green -> Medium green in GitHub theme
+      { id: "yoga", name: "🧘 Yoga Flow", color: "#8b5cf6" }, // Purple -> Bright green in GitHub theme
+      { id: "hiit", name: "🔥 HIIT Training", color: "#ef4444" }, // Red -> Brightest green in GitHub theme
+      { id: "stretching", name: "🤸 Stretching", color: "#f59e0b" }, // Amber -> GitHub primary green
+      { id: "swimming", name: "🏊 Swimming", color: "#06b6d4" }, // Cyan -> GitHub green variant
+      { id: "rest", name: "😴 Rest Day", color: "#6b7280" }, // Gray -> Dark gray in GitHub theme
     ];
 
     this.routines = exampleRoutines;
@@ -70,6 +70,197 @@ class FitTracker {
   }
 
   renderCalendar() {
+    const currentTheme = document.documentElement.getAttribute("data-theme");
+
+    if (currentTheme === "github") {
+      this.renderGitHubStyleCalendar();
+    } else {
+      this.renderNormalCalendar();
+    }
+  }
+
+  renderGitHubStyleCalendar() {
+    // Use the navigation date instead of always current date
+    const currentMonth = this.currentDate.getMonth();
+    const currentYear = this.currentDate.getFullYear();
+
+    const prevMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+    const prevYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+
+    // Update header to show the range
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    document.getElementById(
+      "current-month-year"
+    ).textContent = `${monthNames[prevMonth]} - ${monthNames[currentMonth]} ${currentYear}`;
+
+    const calendarDays = document.getElementById("calendar-days");
+    calendarDays.innerHTML = "";
+
+    // Create GitHub-style layout
+    calendarDays.className = "github-calendar-grid";
+    calendarDays.innerHTML = this.createGitHubCalendarHTML(
+      prevYear,
+      prevMonth,
+      currentYear,
+      currentMonth
+    );
+
+    this.updateStats();
+  }
+
+  createGitHubCalendarHTML(prevYear, prevMonth, currentYear, currentMonth) {
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    let html = `
+      <div class="github-two-month-calendar">
+        <div class="github-months-container">
+          <!-- Previous Month -->
+          <div class="github-month">
+            <h3 class="github-month-title">${
+              monthNames[prevMonth]
+            } ${prevYear}</h3>
+            <div class="github-month-grid">
+              <div class="github-weekdays">
+                <div class="github-weekday">Sun</div>
+                <div class="github-weekday">Mon</div>
+                <div class="github-weekday">Tue</div>
+                <div class="github-weekday">Wed</div>
+                <div class="github-weekday">Thu</div>
+                <div class="github-weekday">Fri</div>
+                <div class="github-weekday">Sat</div>
+              </div>
+              <div class="github-days">
+                ${this.generateMonthDays(prevYear, prevMonth)}
+              </div>
+            </div>
+          </div>
+          
+          <!-- Current Month -->
+          <div class="github-month">
+            <h3 class="github-month-title">${
+              monthNames[currentMonth]
+            } ${currentYear}</h3>
+            <div class="github-month-grid">
+              <div class="github-weekdays">
+                <div class="github-weekday">Sun</div>
+                <div class="github-weekday">Mon</div>
+                <div class="github-weekday">Tue</div>
+                <div class="github-weekday">Wed</div>
+                <div class="github-weekday">Thu</div>
+                <div class="github-weekday">Fri</div>
+                <div class="github-weekday">Sat</div>
+              </div>
+              <div class="github-days">
+                ${this.generateMonthDays(currentYear, currentMonth)}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    return html;
+  }
+
+  generateMonthDays(year, month) {
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
+
+    let days = [];
+
+    // Add empty cells for days before the first day of the month
+    for (let i = 0; i < startingDayOfWeek; i++) {
+      days.push('<div class="github-day github-day-empty"></div>');
+    }
+
+    // Add days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(year, month, day);
+      const dateKey = this.getDateKey(date);
+      const hasWorkout = this.workouts[dateKey];
+      const today = new Date();
+      const isToday = date.toDateString() === today.toDateString();
+      const isFuture = date > today;
+
+      let className = "github-day";
+      if (isToday) className += " github-day-today";
+      if (isFuture) className += " github-day-future";
+
+      let level = 0;
+      if (hasWorkout) {
+        const routine = this.routines.find((r) => r.id === hasWorkout);
+        if (routine) {
+          const colorMap = {
+            "#3b82f6": 1,
+            "#10b981": 2,
+            "#8b5cf6": 3,
+            "#ef4444": 4,
+            "#f59e0b": 2,
+            "#06b6d4": 3,
+            "#6b7280": 1,
+          };
+          level = colorMap[routine.color] || 1;
+        }
+      }
+
+      className += ` github-level-${level}`;
+
+      // Always add click handler, let selectGitHubDate handle future date validation
+      const clickHandler = `onclick="app.selectGitHubDate('${year}', '${month}', '${day}')"`;
+
+      const workoutName = hasWorkout
+        ? this.routines.find((r) => r.id === hasWorkout)?.name || ""
+        : "";
+
+      const tooltip = `${date.toLocaleDateString("en-US", {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      })}${workoutName ? " - " + workoutName : ""}`;
+
+      days.push(`
+        <div class="${className}" 
+             ${clickHandler}
+             title="${tooltip}">
+          ${day}
+        </div>
+      `);
+    }
+
+    return days.join("");
+  }
+
+  renderNormalCalendar() {
     const year = this.currentDate.getFullYear();
     const month = this.currentDate.getMonth();
 
@@ -106,6 +297,9 @@ class FitTracker {
 
     const calendarDays = document.getElementById("calendar-days");
     calendarDays.innerHTML = "";
+
+    // Reset to normal grid layout
+    calendarDays.className = "grid grid-cols-7 gap-2 mb-6";
 
     // Add previous month's trailing days
     const prevMonth = new Date(year, month, 0);
@@ -176,7 +370,15 @@ class FitTracker {
         (r) => r.id === this.workouts[dateKey]
       );
       if (routine) {
-        dayElement.style.backgroundColor = routine.color;
+        // Use GitHub green shades if GitHub theme is active
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme");
+        const workoutColor =
+          currentTheme === "github"
+            ? this.getGitHubGreenShade(routine.color)
+            : routine.color;
+
+        dayElement.style.backgroundColor = workoutColor;
         dayElement.className +=
           " text-white font-bold shadow-lg hover:shadow-xl";
         dayElement.title = routine.name;
@@ -210,6 +412,19 @@ class FitTracker {
   selectDate(date) {
     this.selectedDate = date;
     this.showWorkoutModal();
+  }
+
+  selectGitHubDate(year, month, day) {
+    const date = new Date(parseInt(year), parseInt(month), parseInt(day));
+    const today = new Date();
+    const isFuture = date > today;
+
+    if (isFuture) {
+      this.showToast("You can't log workouts for the future! ⏰", "warning");
+      return;
+    }
+
+    this.selectDate(date);
   }
 
   showWorkoutModal() {
@@ -260,13 +475,18 @@ class FitTracker {
         (r) => r.id === currentWorkout
       );
       if (selectedRoutine) {
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme");
+        const selectedDisplayColor =
+          currentTheme === "github"
+            ? this.getGitHubGreenShade(selectedRoutine.color)
+            : selectedRoutine.color;
+
         container.innerHTML =
           `
           <div class="bg-primary/10 border-2 border-primary rounded-xl p-4 mb-4">
             <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full shadow-sm" style="background-color: ${
-                selectedRoutine.color
-              }"></div>
+              <div class="w-8 h-8 rounded-full shadow-sm" style="background-color: ${selectedDisplayColor}"></div>
               <div class="flex-1">
                 <span class="font-medium text-primary">${this.escapeHtml(
                   selectedRoutine.name
@@ -280,16 +500,18 @@ class FitTracker {
         ` +
           this.routines
             .filter((routine) => routine.id !== currentWorkout)
-            .map(
-              (routine) => `
+            .map((routine) => {
+              const displayColor =
+                currentTheme === "github"
+                  ? this.getGitHubGreenShade(routine.color)
+                  : routine.color;
+              return `
           <div class="group cursor-pointer transition-all duration-200 hover:scale-[1.02]" onclick="app.selectWorkout('${
             routine.id
           }')">
             <div class="bg-base-200 hover:bg-base-300 border border-base-300 hover:border-primary/50 rounded-xl p-4 hover:shadow-md">
               <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full shadow-sm" style="background-color: ${
-                  routine.color
-                }"></div>
+                <div class="w-8 h-8 rounded-full shadow-sm" style="background-color: ${displayColor}"></div>
                 <span class="font-medium flex-1">${this.escapeHtml(
                   routine.name
                 )}</span>
@@ -297,23 +519,26 @@ class FitTracker {
               </div>
             </div>
           </div>
-        `
-            )
+        `;
+            })
             .join("");
       }
     } else {
       // No workout selected, show all options
+      const currentTheme = document.documentElement.getAttribute("data-theme");
       container.innerHTML = this.routines
-        .map(
-          (routine) => `
+        .map((routine) => {
+          const displayColor =
+            currentTheme === "github"
+              ? this.getGitHubGreenShade(routine.color)
+              : routine.color;
+          return `
         <div class="group cursor-pointer transition-all duration-200 hover:scale-[1.02]" onclick="app.selectWorkout('${
           routine.id
         }')">
           <div class="bg-base-200 hover:bg-base-300 border border-base-300 hover:border-primary/50 rounded-xl p-4 hover:shadow-md">
             <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full shadow-sm" style="background-color: ${
-                routine.color
-              }"></div>
+              <div class="w-8 h-8 rounded-full shadow-sm" style="background-color: ${displayColor}"></div>
               <span class="font-medium flex-1">${this.escapeHtml(
                 routine.name
               )}</span>
@@ -321,8 +546,8 @@ class FitTracker {
             </div>
           </div>
         </div>
-      `
-        )
+      `;
+        })
         .join("");
     }
 
@@ -372,15 +597,20 @@ class FitTracker {
     }
 
     container.innerHTML = this.routines
-      .map(
-        (routine) => `
+      .map((routine) => {
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme");
+        const displayColor =
+          currentTheme === "github"
+            ? this.getGitHubGreenShade(routine.color)
+            : routine.color;
+
+        return `
       <div class="group bg-base-100 rounded-lg border border-base-300 hover:border-primary/30 transition-all duration-200 hover:shadow-sm">
         <div class="p-4">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
-              <div class="w-4 h-4 rounded-full shadow-sm" style="background-color: ${
-                routine.color
-              }"></div>
+              <div class="w-4 h-4 rounded-full shadow-sm" style="background-color: ${displayColor}"></div>
               <span class="font-medium text-sm">${this.escapeHtml(
                 routine.name
               )}</span>
@@ -405,8 +635,8 @@ class FitTracker {
           </div>
         </div>
       </div>
-    `
-      )
+    `;
+      })
       .join("");
 
     lucide.createIcons();
@@ -423,9 +653,18 @@ class FitTracker {
 
     // Update color selection UI
     document.querySelectorAll(".color-option").forEach((el) => {
-      el.classList.remove("border-primary");
+      el.classList.remove(
+        "border-primary",
+        "ring-4",
+        "ring-primary",
+        "ring-white"
+      );
+      const existingCheck = el.querySelector(".color-check");
+      if (existingCheck) {
+        existingCheck.remove();
+      }
       if (el.dataset.color === routine.color) {
-        el.classList.add("border-primary");
+        selectColor(routine.color, el);
       }
     });
 
@@ -532,9 +771,31 @@ class FitTracker {
     }, 3000);
   }
 
+  getGitHubGreenShade(originalColor) {
+    // Map different routine colors to GitHub contribution green intensities
+    const colorMap = {
+      "#3b82f6": "#0e4429", // Blue -> Dark green (level 1)
+      "#10b981": "#006d32", // Green -> Forest green (level 2)
+      "#8b5cf6": "#26a641", // Purple -> Medium green (level 3)
+      "#ef4444": "#39d353", // Red -> Bright green (level 4)
+      "#f59e0b": "#00602d", // Amber -> Deep green
+      "#06b6d4": "#196127", // Cyan -> Pine green
+      "#6b7280": "#656d76", // Gray -> Dark gray
+    };
+
+    // Return the mapped GitHub green shade, or default to medium green if not found
+    return colorMap[originalColor] || "#006d32";
+  }
+
   applyTheme() {
     const savedTheme = localStorage.getItem("fittracker-theme") || "light";
     document.documentElement.setAttribute("data-theme", savedTheme);
+
+    // Update theme indicators and color picker after DOM is ready
+    setTimeout(() => {
+      updateThemeIndicators(savedTheme);
+      updateColorPicker(savedTheme);
+    }, 100);
   }
 
   getDateKey(date) {
@@ -582,20 +843,60 @@ function openRoutineModal() {
 
   // Reset color selection
   document.querySelectorAll(".color-option").forEach((el) => {
-    el.classList.remove("border-primary");
+    el.classList.remove(
+      "border-primary",
+      "ring-4",
+      "ring-primary",
+      "ring-white"
+    );
+    const existingCheck = el.querySelector(".color-check");
+    if (existingCheck) {
+      existingCheck.remove();
+    }
   });
-  document
-    .querySelector('.color-option[data-color="#3b82f6"]')
-    .classList.add("border-primary");
+
+  // Set first color as selected by default
+  const firstColorOption = document.querySelector(
+    '.color-option[data-color="#3b82f6"]'
+  );
+  if (firstColorOption) {
+    selectColor("#3b82f6", firstColorOption);
+  }
 
   document.getElementById("routine-modal").showModal();
 }
 
 function selectColor(color, element) {
+  // Remove all existing selections
   document.querySelectorAll(".color-option").forEach((el) => {
-    el.classList.remove("border-primary");
+    el.classList.remove(
+      "border-primary",
+      "ring-4",
+      "ring-primary",
+      "ring-white"
+    );
+    // Remove any existing checkmark
+    const existingCheck = el.querySelector(".color-check");
+    if (existingCheck) {
+      existingCheck.remove();
+    }
   });
-  element.classList.add("border-primary");
+
+  // Add selection indicators to clicked element
+  element.classList.add("border-primary", "ring-4", "ring-white");
+
+  // Add checkmark icon
+  const checkIcon = document.createElement("div");
+  checkIcon.className =
+    "color-check absolute inset-0 flex items-center justify-center";
+  checkIcon.innerHTML =
+    '<i data-lucide="check" class="w-5 h-5 text-white drop-shadow-lg"></i>';
+  element.style.position = "relative";
+  element.appendChild(checkIcon);
+
+  // Reinitialize icons for the new checkmark
+  lucide.createIcons();
+
   document.getElementById("selected-color").value = color;
 }
 
@@ -654,7 +955,94 @@ function saveRoutine() {
 function changeTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
   localStorage.setItem("fittracker-theme", theme);
+  updateThemeIndicators(theme);
+  updateColorPicker(theme);
+
+  // Re-render calendar and routines to apply theme-specific colors
+  app.renderCalendar();
+  app.renderRoutines();
+
   app.showToast(`Theme changed to ${theme}! 🎨`, "success");
+}
+
+function updateColorPicker(theme) {
+  const originalColors = [
+    "#3b82f6",
+    "#10b981",
+    "#8b5cf6",
+    "#ef4444",
+    "#f59e0b",
+    "#06b6d4",
+    "#6b7280",
+  ];
+  const githubColors = [
+    "#0e4429",
+    "#006d32",
+    "#26a641",
+    "#39d353",
+    "#00602d",
+    "#196127",
+    "#656d76",
+  ];
+  const githubTitles = [
+    "Dark Green",
+    "Forest Green",
+    "Medium Green",
+    "Bright Green",
+    "Deep Green",
+    "Pine Green",
+    "Gray",
+  ];
+  const originalTitles = [
+    "Blue",
+    "Green",
+    "Purple",
+    "Red",
+    "Amber",
+    "Cyan",
+    "Gray",
+  ];
+
+  const colorOptions = document.querySelectorAll(".color-option");
+  const colors = theme === "github" ? githubColors : originalColors;
+  const titles = theme === "github" ? githubTitles : originalTitles;
+
+  colorOptions.forEach((option, index) => {
+    if (index < colors.length) {
+      option.style.backgroundColor = colors[index];
+      option.title = titles[index];
+      // Keep original data-color for storage
+      // Don't change data-color attribute to preserve original color mapping
+    }
+  });
+}
+
+function updateThemeIndicators(selectedTheme) {
+  // Remove all existing theme indicators
+  document.querySelectorAll(".theme-option").forEach((option) => {
+    const checkIcon = option.querySelector(".theme-check");
+    if (checkIcon) {
+      checkIcon.remove();
+    }
+    option.classList.remove("bg-primary/10", "border-primary/30");
+  });
+
+  // Find and highlight the selected theme
+  const selectedOption = document.querySelector(
+    `[onclick="changeTheme('${selectedTheme}')"]`
+  );
+  if (selectedOption) {
+    selectedOption.classList.add("bg-primary/10", "border-primary/30");
+
+    // Add checkmark icon
+    const checkIcon = document.createElement("i");
+    checkIcon.setAttribute("data-lucide", "check");
+    checkIcon.className = "w-4 h-4 text-primary theme-check ml-auto";
+    selectedOption.appendChild(checkIcon);
+
+    // Reinitialize icons for the new checkmark
+    lucide.createIcons();
+  }
 }
 
 function exportData() {

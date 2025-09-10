@@ -84,6 +84,239 @@
         background: rgba(255, 255, 255, 0.9);
         border: 1px solid rgba(0, 0, 0, 0.1);
       }
+
+      /* GitHub Theme - Custom CSS */
+      [data-theme="github"] {
+        --primary: #238636;
+        --primary-focus: #2ea043;
+        --primary-content: #ffffff;
+        --secondary: #656d76;
+        --secondary-focus: #8b949e;
+        --secondary-content: #ffffff;
+        --accent: #0969da;
+        --accent-focus: #0550ae;
+        --accent-content: #ffffff;
+        --neutral: #21262d;
+        --neutral-focus: #30363d;
+        --neutral-content: #f0f6fc;
+        --base-100: #0d1117;
+        --base-200: #161b22;
+        --base-300: #21262d;
+        --base-content: #f0f6fc;
+        --info: #0969da;
+        --info-content: #ffffff;
+        --success: #238636;
+        --success-content: #ffffff;
+        --warning: #bf8700;
+        --warning-content: #ffffff;
+        --error: #da3633;
+        --error-content: #ffffff;
+      }
+
+      /* GitHub contribution-style calendar styling */
+      [data-theme="github"] .calendar-day {
+        border: 1px solid #30363d;
+        border-radius: 4px; /* Slightly rounded */
+        color: #8b949e;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      /* Empty days background - only for days without workouts */
+      [data-theme="github"] .calendar-day:not([style*="background-color"]) {
+        background: #161b22; /* GitHub empty contribution color */
+      }
+
+      [data-theme="github"] .calendar-day:hover {
+        border-color: #656d76;
+      }
+
+      /* GitHub theme - empty days hover effect */
+      [data-theme="github"]
+        .calendar-day:not([style*="background-color"]):hover {
+        background: #21262d; /* Slightly lighter on hover for empty days */
+      }
+
+      /* GitHub contribution intensity levels - for workout days */
+      [data-theme="github"] .calendar-day[style*="background-color"] {
+        border-color: #30363d;
+        color: #ffffff; /* White text on green backgrounds */
+      }
+
+      /* GitHub theme sidebar and UI adjustments */
+      [data-theme="github"] .bg-base-200\/50 {
+        background: rgba(33, 38, 45, 0.5) !important;
+      }
+
+      [data-theme="github"] .border-base-200 {
+        border-color: #30363d !important;
+      }
+
+      /* GitHub contribution graph tooltip styling */
+      [data-theme="github"] .calendar-day[title]:hover::after {
+        content: attr(title);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #21262d;
+        color: #f0f6fc;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        white-space: nowrap;
+        z-index: 1000;
+        border: 1px solid #30363d;
+      }
+
+      /* GitHub Two-Month Calendar Layout */
+      .github-two-month-calendar {
+        width: 100%;
+        padding: 20px;
+      }
+
+      .github-months-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .github-month {
+        background: #0d1117;
+        border-radius: 0px;
+        padding: 30px;
+        border: none;
+      }
+
+      .github-month:first-child {
+        border-radius: 0px;
+        border: none;
+      }
+
+      .github-month:last-child {
+        border-radius: 0px;
+        border: none;
+      }
+
+      .github-month-title {
+        color: #f0f6fc;
+        font-size: 22px;
+        font-weight: 600;
+        margin: 0 0 20px 0;
+        text-align: center;
+      }
+
+      .github-month-grid {
+        width: 100%;
+      }
+
+      .github-weekdays {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+        margin-bottom: 12px;
+      }
+
+      .github-weekday {
+        color: #8b949e;
+        font-size: 12px;
+        font-weight: 500;
+        text-align: center;
+        padding: 10px 4px;
+      }
+
+      .github-days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+      }
+
+      .github-day {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20%;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        min-height: 40px;
+        margin: 2px;
+        color: #f0f6fc;
+      }
+
+      .github-day:hover {
+        transform: scale(1.1);
+        z-index: 10;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+      }
+
+      .github-day-empty {
+        background: transparent !important;
+        cursor: default;
+        pointer-events: none;
+      }
+
+      .github-day-today {
+        outline: 2px solid #f78166;
+        outline-offset: 1px;
+      }
+
+      .github-day-future {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* GitHub contribution levels for calendar days */
+      .github-level-0 {
+        background-color: #161b22;
+        border: 1px solid #30363d;
+      }
+
+      .github-level-1 {
+        background-color: #0e4429;
+        border: 1px solid #0e4429;
+      }
+
+      .github-level-2 {
+        background-color: #006d32;
+        border: 1px solid #006d32;
+      }
+
+      .github-level-3 {
+        background-color: #26a641;
+        border: 1px solid #26a641;
+      }
+
+      .github-level-4 {
+        background-color: #39d353;
+        border: 1px solid #39d353;
+      }
+
+      /* Override normal calendar grid when GitHub theme is active */
+      [data-theme="github"] .calendar-grid {
+        display: block !important;
+      }
+
+      /* Hide the normal calendar weekday headers in GitHub theme */
+      [data-theme="github"] .calendar-grid.mb-4 {
+        display: none !important;
+      }
+
+      /* Responsive design for smaller screens */
+      @media (max-width: 768px) {
+        .github-months-container {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .github-two-month-calendar {
+          padding: 10px;
+        }
+      }
     </style>
   </head>
 
@@ -164,7 +397,7 @@
               <li>
                 <a
                   onclick="changeTheme('light')"
-                  class="btn btn-sm btn-ghost justify-start gap-3"
+                  class="theme-option btn btn-sm btn-ghost justify-start gap-3"
                 >
                   <div
                     class="w-3 h-3 bg-white border border-gray-300 rounded-full"
@@ -175,7 +408,7 @@
               <li>
                 <a
                   onclick="changeTheme('dark')"
-                  class="btn btn-sm btn-ghost justify-start gap-3"
+                  class="theme-option btn btn-sm btn-ghost justify-start gap-3"
                 >
                   <div class="w-3 h-3 bg-gray-800 rounded-full"></div>
                   Dark
@@ -184,7 +417,7 @@
               <li>
                 <a
                   onclick="changeTheme('cupcake')"
-                  class="btn btn-sm btn-ghost justify-start gap-3"
+                  class="theme-option btn btn-sm btn-ghost justify-start gap-3"
                 >
                   <div class="w-3 h-3 bg-pink-300 rounded-full"></div>
                   Cupcake
@@ -193,7 +426,7 @@
               <li>
                 <a
                   onclick="changeTheme('cyberpunk')"
-                  class="btn btn-sm btn-ghost justify-start gap-3"
+                  class="theme-option btn btn-sm btn-ghost justify-start gap-3"
                 >
                   <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
                   Cyberpunk
@@ -202,7 +435,7 @@
               <li>
                 <a
                   onclick="changeTheme('valentine')"
-                  class="btn btn-sm btn-ghost justify-start gap-3"
+                  class="theme-option btn btn-sm btn-ghost justify-start gap-3"
                 >
                   <div class="w-3 h-3 bg-pink-500 rounded-full"></div>
                   Valentine
@@ -211,7 +444,7 @@
               <li>
                 <a
                   onclick="changeTheme('aqua')"
-                  class="btn btn-sm btn-ghost justify-start gap-3"
+                  class="theme-option btn btn-sm btn-ghost justify-start gap-3"
                 >
                   <div class="w-3 h-3 bg-blue-400 rounded-full"></div>
                   Aqua
@@ -220,7 +453,7 @@
               <li>
                 <a
                   onclick="changeTheme('luxury')"
-                  class="btn btn-sm btn-ghost justify-start gap-3"
+                  class="theme-option btn btn-sm btn-ghost justify-start gap-3"
                 >
                   <div class="w-3 h-3 bg-amber-600 rounded-full"></div>
                   Luxury
@@ -229,10 +462,21 @@
               <li>
                 <a
                   onclick="changeTheme('dracula')"
-                  class="btn btn-sm btn-ghost justify-start gap-3"
+                  class="theme-option btn btn-sm btn-ghost justify-start gap-3"
                 >
                   <div class="w-3 h-3 bg-purple-600 rounded-full"></div>
                   Dracula
+                </a>
+              </li>
+              <li>
+                <a
+                  onclick="changeTheme('github')"
+                  class="theme-option btn btn-sm btn-ghost justify-start gap-3"
+                >
+                  <div
+                    class="w-3 h-3 bg-gray-900 border border-gray-600 rounded-sm"
+                  ></div>
+                  GitHub
                 </a>
               </li>
             </ul>
