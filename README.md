@@ -2,6 +2,12 @@
 
 A beautiful, modern single-page web application for tracking your workout routines with a professional calendar interface. Built with Tailwind CSS and DaisyUI for a sleek, responsive design.
 
+## 🌐 Live Demo
+
+**Try it now:** [https://workoutcalendar.pages.dev/](https://workoutcalendar.pages.dev/)
+
+*Experience the full functionality without any installation - just click and start tracking your workouts!*
+
 ![FitTracker Screenshot](screenshot.png)
 
 ## ✨ Features
