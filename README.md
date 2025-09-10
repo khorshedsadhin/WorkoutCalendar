@@ -1,6 +1,6 @@
 # FitTracker - Workout Calendar
 
-A beautiful, modern single-page web application for tracking your workout routines with a professional calendar interface. Built with Tailwind CSS and DaisyUI for a sleek, responsive design.
+A beautiful, modern single-page web application for tracking your workout routines with a professional calendar interface. Built with Tailwind CSS and DaisyUI for a sleek, responsive design with **9 stunning themes** including a unique **GitHub contribution graph style**.
 
 ## 🌐 Live Demo
 
@@ -12,7 +12,7 @@ _Experience the full functionality without any installation - just click and sta
 
 ## ✨ Features
 
-### 🎨 **8 Beautiful DaisyUI Themes**
+### 🎨 **9 Beautiful Themes Including GitHub Style**
 
 Choose from professionally designed themes:
 
@@ -24,23 +24,35 @@ Choose from professionally designed themes:
 - **Aqua** - Cool blue color palette
 - **Luxury** - Rich, elegant gold accents
 - **Dracula** - Dark theme with purple highlights
+- **🔥 GitHub** - **NEW!** Contribution graph style with 2-month view, rounded squares, and authentic GitHub green color levels
 
 ### 💪 **Advanced Routine Management**
 
 - Create custom workout routines with personalized names and colors
 - **7 Distinguishable Colors**: Blue, Green, Purple, Red, Amber, Cyan, Gray
+- **Theme-aware color picker**: Shows GitHub green shades in GitHub theme while preserving original colors
 - Edit existing routines with inline editing
 - Delete routines with confirmation dialog
 - **Example Routines**: Strength Training, Cardio Blast, Yoga Flow, HIIT Training, Stretching, Swimming, Rest Day
 
-### 📅 **Interactive Calendar**
+### 📅 **Dual Calendar Experience**
+
+#### Standard Calendar View
 
 - Monthly calendar view with smooth navigation
 - Click any past or current date to log workouts
 - **Visual workout indicators** with colored backgrounds and tooltips
 - **Today's date highlighted** with animated ring
-- Future dates disabled (prevents logging future workouts)
-- **Responsive design** - Perfectly sized for desktop and mobile
+- Future dates disabled with warning alerts
+
+#### 🆕 GitHub Contribution Calendar
+
+- **Authentic 2-month side-by-side layout** mimicking GitHub's contribution graph
+- **Rounded squares** with proper GitHub-style spacing
+- **5 intensity levels** of green based on workout completion
+- **Seamless design** with no borders between months
+- **Larger desktop-optimized** interface for better usability
+- **Proper navigation** through months while maintaining 2-month view
 
 ### 🔄 **Smart Workout Selection**
 
@@ -49,6 +61,7 @@ Choose from professionally designed themes:
 - Easy switching between different workouts
 - **Improved Clear functionality** with larger, more accessible button
 - Color-coded options for easy identification
+- **Future date protection** with consistent warning alerts across all themes
 
 ### 📊 **Workout Statistics**
 
@@ -76,18 +89,20 @@ Choose from professionally designed themes:
 ## 🛠 Technology Stack
 
 - **HTML5** - Semantic markup structure
-- **Tailwind CSS 3.4.1** - Utility-first CSS framework
-- **DaisyUI 4.12.10** - Component library with theme system
+- **Tailwind CSS 3.4.1** - Utility-first CSS framework for responsive design
+- **DaisyUI 4.12.10** - Component library with enhanced 9-theme system
 - **JavaScript (ES6+)** - Vanilla JavaScript with modern class structure
 - **Lucide Icons** - Beautiful, consistent icon set
 - **Google Fonts (Inter)** - Professional typography
 - **Local Storage API** - Client-side data persistence
+- **Custom CSS Variables** - Advanced GitHub theme implementation
 
 ## 🚀 Getting Started
 
 1. **Clone or download** this repository
 2. **Open `index.html`** in any modern web browser
-3. **Start tracking** your workouts immediately!
+3. **Choose your preferred theme** (try the new GitHub theme!)
+4. **Start tracking** your workouts immediately!
 
 No build process, dependencies, or server setup required - just open and use!
 
@@ -97,7 +112,27 @@ No build process, dependencies, or server setup required - just open and use!
 
 1. Click the **"Add Routine"** button in the navigation or sidebar
 2. Enter a descriptive routine name (e.g., "Morning Cardio")
-3. Choose from **7 distinguishable colors**
+3. Choose from **7 distinguishable colors** (automatically adapts to GitHub green shades in GitHub theme)
+4. Click **"Save"** to add the routine
+
+### Logging Workouts
+
+1. Click on any **past or current date** on the calendar
+2. **View current selection** if a workout is already logged
+3. Select a different routine or click **"Clear Workout"** to remove
+4. See immediate visual feedback on the calendar
+5. **Future dates protected** - clicking shows warning toast in all themes
+
+### Exploring the GitHub Theme
+
+1. Click the **theme button** (🎨) in navigation
+2. Select **"GitHub"** theme
+3. Experience the **2-month contribution graph layout**
+4. Navigate between months using the arrow buttons
+5. See workout intensity in **authentic GitHub green levels**
+
+### Managing Your Data
+
 4. Click **"Save"** to add the routine
 
 ### Logging Workouts
@@ -125,10 +160,26 @@ No build process, dependencies, or server setup required - just open and use!
 ### Customizing Appearance
 
 - Click the **theme button** (🎨) in the top navigation
-- Choose from **8 beautiful DaisyUI themes**
-- Theme preference automatically saved
+- Choose from **9 beautiful themes** including the new GitHub contribution style
+- Theme preference automatically saved and applies correctly on first load
+- **GitHub theme features**:
+  - 2-month side-by-side calendar view
+  - Rounded contribution squares
+  - Authentic GitHub green color intensity levels
+  - Seamless month transitions with no borders
+  - Desktop-optimized larger interface
 
 ## 🎯 Key Features in Detail
+
+### Revolutionary GitHub Theme
+
+- **Authentic contribution graph experience** inspired by GitHub's activity overview
+- **Dual-month layout** showing current and previous month side-by-side
+- **5 intensity levels** of green representing workout frequency/intensity
+- **Rounded squares** with proper spacing for modern aesthetic
+- **Borderless design** creating one unified calendar experience
+- **Enhanced navigation** maintaining 2-month view while browsing
+- **Theme-aware color mapping** preserving original routine colors
 
 ### Enhanced Workout Selection
 
@@ -136,13 +187,16 @@ No build process, dependencies, or server setup required - just open and use!
 - **"Currently selected" indicator** with check mark
 - **Easy switching** between different routines
 - **Prominent clear button** for removing workouts
+- **Consistent future date protection** across all themes with warning toasts
 
 ### Professional UI/UX
 
 - **Sidebar layout** keeps routines organized and accessible
-- **Toast notifications** provide immediate feedback
+- **Toast notifications** provide immediate feedback for all actions
 - **Smooth animations** and hover effects throughout
 - **Consistent spacing** and visual hierarchy
+- **Responsive design** adapting from desktop to mobile seamlessly
+- **Glass-morphism effects** for modern visual appeal
 
 ### Data Safety
 
