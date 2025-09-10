@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FitTracker - Workout Calendar</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- DaisyUI CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <style>
+      * {
+        font-family: "Inter", sans-serif;
+      }
+
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+      }
+
+      .calendar-day {
+        aspect-ratio: 1;
+        min-height: 48px;
+      }
+
+      @media (min-width: 768px) {
+        .calendar-day {
+          min-height: 64px;
+        }
+      }
+
+      .glass-effect {
+        backdrop-filter: blur(16px);
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      [data-theme="dark"] .glass-effect {
+        background: rgba(0, 0, 0, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .animate-bounce-subtle {
+        animation: bounce-subtle 2s infinite;
+      }
+
+      @keyframes bounce-subtle {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-2px);
+        }
+      }
+
+      .gradient-text {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .workout-indicator {
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+
+  <body class="bg-base-100 min-h-screen">
+    <!-- Main Container -->
+    <div class="min-h-screen flex flex-col">
+      <!-- Navigation Header -->
+      <nav class="navbar bg-base-100 shadow-lg border-b border-base-200">
+        <div class="navbar-start">
+          <div class="dropdown lg:hidden">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+              <i data-lucide="menu"></i>
+            </div>
+            <ul
+              tabindex="0"
+              class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <a onclick="openRoutineModal()"
+                  ><i data-lucide="plus"></i> Add Routine</a
+                >
+              </li>
+              <li>
+                <a onclick="exportData()"
+                  ><i data-lucide="download"></i> Export Data</a
+                >
+              </li>
+              <li>
+                <a onclick="importData()"
+                  ><i data-lucide="upload"></i> Import Data</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center"
+            >
+              <i data-lucide="calendar" class="text-white w-5 h-5"></i>
+            </div>
+            <div>
+              <h1 class="text-xl font-bold gradient-text">FitTracker</h1>
+              <p class="text-xs text-base-content/60">Workout Calendar</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="navbar-center hidden lg:flex">
+          <ul class="menu menu-horizontal px-1">
+            <li>
+              <a onclick="openRoutineModal()" class="btn btn-ghost"
+                ><i data-lucide="plus" class="w-4 h-4"></i> Add Routine</a
+              >
+            </li>
+            <li>
+              <a onclick="exportData()" class="btn btn-ghost"
+                ><i data-lucide="download" class="w-4 h-4"></i> Export</a
+              >
+            </li>
+            <li>
+              <a onclick="importData()" class="btn btn-ghost"
+                ><i data-lucide="upload" class="w-4 h-4"></i> Import</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="navbar-end">
+          <div class="dropdown dropdown-end">
+            <div tabindex="0" role="button" class="btn btn-circle btn-ghost">
+              <i data-lucide="palette" class="w-5 h-5"></i>
+            </div>
+            <ul
+              tabindex="0"
+              class="dropdown-content z-[1] menu p-2 shadow-lg bg-base-100 rounded-box w-48"
+            >
+              <li class="menu-title">Themes</li>
+              <li>
+                <a
+                  onclick="changeTheme('light')"
+                  class="btn btn-sm btn-ghost justify-start gap-3"
+                >
+                  <div
+                    class="w-3 h-3 bg-white border border-gray-300 rounded-full"
+                  ></div>
+                  Light
+                </a>
+              </li>
+              <li>
+                <a
+                  onclick="changeTheme('dark')"
+                  class="btn btn-sm btn-ghost justify-start gap-3"
+                >
+                  <div class="w-3 h-3 bg-gray-800 rounded-full"></div>
+                  Dark
+                </a>
+              </li>
+              <li>
+                <a
+                  onclick="changeTheme('cupcake')"
+                  class="btn btn-sm btn-ghost justify-start gap-3"
+                >
+                  <div class="w-3 h-3 bg-pink-300 rounded-full"></div>
+                  Cupcake
+                </a>
+              </li>
+              <li>
+                <a
+                  onclick="changeTheme('cyberpunk')"
+                  class="btn btn-sm btn-ghost justify-start gap-3"
+                >
+                  <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                  Cyberpunk
+                </a>
+              </li>
+              <li>
+                <a
+                  onclick="changeTheme('valentine')"
+                  class="btn btn-sm btn-ghost justify-start gap-3"
+                >
+                  <div class="w-3 h-3 bg-pink-500 rounded-full"></div>
+                  Valentine
+                </a>
+              </li>
+              <li>
+                <a
+                  onclick="changeTheme('aqua')"
+                  class="btn btn-sm btn-ghost justify-start gap-3"
+                >
+                  <div class="w-3 h-3 bg-blue-400 rounded-full"></div>
+                  Aqua
+                </a>
+              </li>
+              <li>
+                <a
+                  onclick="changeTheme('luxury')"
+                  class="btn btn-sm btn-ghost justify-start gap-3"
+                >
+                  <div class="w-3 h-3 bg-amber-600 rounded-full"></div>
+                  Luxury
+                </a>
+              </li>
+              <li>
+                <a
+                  onclick="changeTheme('dracula')"
+                  class="btn btn-sm btn-ghost justify-start gap-3"
+                >
+                  <div class="w-3 h-3 bg-purple-600 rounded-full"></div>
+                  Dracula
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content Area -->
+      <div class="flex-1 flex">
+        <!-- Sidebar -->
+        <div
+          class="w-80 bg-base-200/50 backdrop-blur-sm border-r border-base-200 hidden lg:flex flex-col"
+        >
+          <div class="p-6">
+            <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+              <i data-lucide="dumbbell" class="w-5 h-5 text-primary"></i>
+              Your Routines
+            </h2>
+
+            <div id="routines-list" class="space-y-3 mb-6">
+              <!-- Routines will be rendered here -->
+            </div>
+
+            <button onclick="openRoutineModal()" class="btn btn-primary w-full">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              Add New Routine
+            </button>
+          </div>
+
+          <!-- Stats Section -->
+          <div class="p-6 mt-auto bg-base-100/50">
+            <h3 class="font-semibold mb-3 flex items-center gap-2">
+              <i data-lucide="trending-up" class="w-4 h-4 text-success"></i>
+              This Month
+            </h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div
+                class="stat-box bg-success/10 border border-success/20 rounded-lg p-3"
+              >
+                <div
+                  class="text-2xl font-bold text-success"
+                  id="workouts-count"
+                >
+                  0
+                </div>
+                <div class="text-xs text-success/70">Workouts</div>
+              </div>
+              <div
+                class="stat-box bg-primary/10 border border-primary/20 rounded-lg p-3"
+              >
+                <div class="text-2xl font-bold text-primary" id="streak-count">
+                  0
+                </div>
+                <div class="text-xs text-primary/70">Day Streak</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendar Area -->
+        <div class="flex-1 flex flex-col">
+          <!-- Calendar Header -->
+          <div class="bg-base-100 border-b border-base-200 p-6">
+            <div class="max-w-4xl mx-auto">
+              <div class="flex items-center justify-between mb-4">
+                <button
+                  id="prev-month"
+                  class="btn btn-circle btn-outline hover:btn-primary"
+                >
+                  <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                </button>
+
+                <div class="text-center">
+                  <h2 id="current-month-year" class="text-3xl font-bold"></h2>
+                  <p class="text-base-content/60">
+                    Click any day to log your workout
+                  </p>
+                </div>
+
+                <button
+                  id="next-month"
+                  class="btn btn-circle btn-outline hover:btn-primary"
+                >
+                  <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Calendar Grid -->
+          <div class="flex-1 p-6 overflow-auto">
+            <div class="max-w-4xl mx-auto">
+              <div
+                class="bg-base-100 rounded-2xl shadow-sm border border-base-200 p-6"
+              >
+                <!-- Day Headers -->
+                <div class="calendar-grid mb-4">
+                  <div
+                    class="text-center font-semibold text-sm text-base-content/70 py-2"
+                  >
+                    Sun
+                  </div>
+                  <div
+                    class="text-center font-semibold text-sm text-base-content/70 py-2"
+                  >
+                    Mon
+                  </div>
+                  <div
+                    class="text-center font-semibold text-sm text-base-content/70 py-2"
+                  >
+                    Tue
+                  </div>
+                  <div
+                    class="text-center font-semibold text-sm text-base-content/70 py-2"
+                  >
+                    Wed
+                  </div>
+                  <div
+                    class="text-center font-semibold text-sm text-base-content/70 py-2"
+                  >
+                    Thu
+                  </div>
+                  <div
+                    class="text-center font-semibold text-sm text-base-content/70 py-2"
+                  >
+                    Fri
+                  </div>
+                  <div
+                    class="text-center font-semibold text-sm text-base-content/70 py-2"
+                  >
+                    Sat
+                  </div>
+                </div>
+
+                <!-- Calendar Days -->
+                <div id="calendar-days" class="calendar-grid">
+                  <!-- Days will be rendered here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add/Edit Routine Modal -->
+    <dialog id="routine-modal" class="modal">
+      <div class="modal-box max-w-md">
+        <form method="dialog">
+          <button
+            class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          >
+            ✕
+          </button>
+        </form>
+
+        <h3 class="font-bold text-lg mb-4">
+          <i data-lucide="plus" class="w-5 h-5 inline"></i>
+          <span id="modal-title">Add New Routine</span>
+        </h3>
+
+        <div class="space-y-4">
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-medium">Routine Name</span>
+            </label>
+            <input
+              type="text"
+              id="routine-name-input"
+              placeholder="e.g., Morning Cardio"
+              class="input input-bordered w-full"
+              maxlength="25"
+            />
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-medium">Color</span>
+            </label>
+            <div class="flex flex-wrap gap-3">
+              <div
+                class="color-option w-10 h-10 bg-blue-500 rounded-lg cursor-pointer hover:scale-110 transition-transform border-2 border-transparent"
+                data-color="#3b82f6"
+                onclick="selectColor('#3b82f6', this)"
+                title="Blue"
+              ></div>
+              <div
+                class="color-option w-10 h-10 bg-green-500 rounded-lg cursor-pointer hover:scale-110 transition-transform border-2 border-transparent"
+                data-color="#10b981"
+                onclick="selectColor('#10b981', this)"
+                title="Green"
+              ></div>
+              <div
+                class="color-option w-10 h-10 bg-purple-500 rounded-lg cursor-pointer hover:scale-110 transition-transform border-2 border-transparent"
+                data-color="#8b5cf6"
+                onclick="selectColor('#8b5cf6', this)"
+                title="Purple"
+              ></div>
+              <div
+                class="color-option w-10 h-10 bg-red-500 rounded-lg cursor-pointer hover:scale-110 transition-transform border-2 border-transparent"
+                data-color="#ef4444"
+                onclick="selectColor('#ef4444', this)"
+                title="Red"
+              ></div>
+              <div
+                class="color-option w-10 h-10 bg-amber-500 rounded-lg cursor-pointer hover:scale-110 transition-transform border-2 border-transparent"
+                data-color="#f59e0b"
+                onclick="selectColor('#f59e0b', this)"
+                title="Amber"
+              ></div>
+              <div
+                class="color-option w-10 h-10 bg-cyan-500 rounded-lg cursor-pointer hover:scale-110 transition-transform border-2 border-transparent"
+                data-color="#06b6d4"
+                onclick="selectColor('#06b6d4', this)"
+                title="Cyan"
+              ></div>
+              <div
+                class="color-option w-10 h-10 bg-gray-500 rounded-lg cursor-pointer hover:scale-110 transition-transform border-2 border-transparent"
+                data-color="#6b7280"
+                onclick="selectColor('#6b7280', this)"
+                title="Gray"
+              ></div>
+            </div>
+            <input type="hidden" id="selected-color" value="#3b82f6" />
+          </div>
+        </div>
+
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn btn-ghost">Cancel</button>
+          </form>
+          <button
+            id="save-routine-btn"
+            class="btn btn-primary"
+            onclick="saveRoutine()"
+          >
+            <i data-lucide="save" class="w-4 h-4"></i>
+            Save Routine
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Workout Selection Modal -->
+    <dialog id="workout-modal" class="modal">
+      <div class="modal-box max-w-lg">
+        <form method="dialog">
+          <button
+            class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          >
+            ✕
+          </button>
+        </form>
+
+        <h3 class="font-bold text-lg mb-2">
+          <i data-lucide="calendar-days" class="w-5 h-5 inline"></i>
+          Select Workout
+        </h3>
+        <p id="selected-date" class="text-base-content/70 mb-6"></p>
+
+        <div id="workout-options" class="space-y-3 mb-6">
+          <!-- Workout options will be rendered here -->
+        </div>
+
+        <div class="flex gap-2 justify-end">
+          <button
+            id="clear-workout-btn"
+            class="btn btn-error"
+            onclick="app.clearWorkout()"
+            style="display: none"
+          >
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+            Clear Workout
+          </button>
+        </div>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+
+    <!-- Delete Confirmation Modal -->
+    <dialog id="delete-modal" class="modal">
+      <div class="modal-box max-w-sm">
+        <h3 class="font-bold text-lg mb-2 text-error">
+          <i data-lucide="trash-2" class="w-5 h-5 inline"></i>
+          Delete Routine
+        </h3>
+        <p class="mb-6">
+          Are you sure you want to delete this routine? This will also remove
+          all associated workouts.
+        </p>
+
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn btn-ghost">Cancel</button>
+          </form>
+          <button id="confirm-delete-btn" class="btn btn-error">Delete</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Import Confirmation Modal -->
+    <dialog id="import-modal" class="modal">
+      <div class="modal-box max-w-md">
+        <h3 class="font-bold text-lg mb-4 text-primary">
+          <i data-lucide="upload" class="w-5 h-5 inline"></i>
+          Import Data
+        </h3>
+
+        <div id="import-details" class="mb-6">
+          <!-- Import details will be populated by JavaScript -->
+        </div>
+
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn btn-ghost">Cancel</button>
+          </form>
+          <button id="confirm-import-btn" class="btn btn-primary">
+            <i data-lucide="check" class="w-4 h-4"></i>
+            Import
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast toast-end z-50"></div>
+
+    <script src="script.js"></script>
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

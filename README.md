@@ -1,90 +1,294 @@
-# Workout Calendar - Chrome Extension
+# FitTracker - Workout Calendar
 
-A personal, browser-based workout calendar to help you track your fitness routines, view monthly progress, and stay motivated! This Chrome extension provides a sleek dark-themed interface to manage and log your workouts.
+A beautiful, modern single-page web application for tracking your workout routines with a professional calendar interface. Built with Tailwind CSS and DaisyUI for a sleek, responsive design.
 
-## Features
+![FitTracker Screenshot](screenshot.png)
 
-* **Interactive Calendar:** Easily view your workouts month by month.
-* **Custom Workout Routines:**
-    * Add new workout routines with custom names and assign a unique color to each.
-    * Edit existing routine names and colors.
-    * Delete routines you no longer need.
-* **Daily Logging:** Click on any day in the calendar to select and log a workout you performed. The day will be colored according to the routine.
-* **Monthly Statistics:** Get an overview of your activity for the current month, including:
-    * Number of days each specific workout routine was performed.
-    * Number of days with no workout entry.
-* **Persistent Data:** Your workout routines and logged entries are saved locally in your browser using `localStorage`.
-* **Dark Theme:** A modern, premium-looking dark interface.
-* **Three-Column Layout:**
-    * **Left Panel:** Manage your workout routines (add, edit, view list).
-    * **Center Panel:** The main workout calendar.
-    * **Right Panel:** Monthly statistics.
-* **Easy Access:** Click the extension icon in your Chrome toolbar to open the Workout Calendar in a new tab (or focus it if it's already open).
+## ✨ Features
 
-## Installation (Sideloading for Development/Personal Use)
+### 🎨 **8 Beautiful DaisyUI Themes**
 
-Since this extension isn't on the Chrome Web Store (yet!), you'll need to load it manually:
+Choose from professionally designed themes:
 
-1.  **Download the Extension Files:**
-    * Clone this repository or download it as a ZIP file and extract it to a folder on your computer (e.g., `WorkoutCalendarExtension`).
-    * Ensure you have the following file structure:
-        ```
-        WorkoutCalendarExtension/
-        ├── manifest.json
-        ├── background.js
-        ├── calendar.html
-        ├── calendar.js  <-- Make sure your JS file is named this (or adjust if you used calender.js)
-        └── icons/
-            ├── icon16.png
-            ├── icon48.png
-            └── icon128.png
-        ```
+- **Light** - Clean, modern light theme
+- **Dark** - Sleek dark theme for low-light environments
+- **Cupcake** - Soft, pastel colors
+- **Cyberpunk** - Neon, futuristic styling
+- **Valentine** - Romantic pink tones
+- **Aqua** - Cool blue color palette
+- **Luxury** - Rich, elegant gold accents
+- **Dracula** - Dark theme with purple highlights
 
-2.  **Open Chrome Extensions Page:**
-    * Open Google Chrome.
-    * Type `chrome://extensions` in the address bar and press Enter.
+### 💪 **Advanced Routine Management**
 
-3.  **Enable Developer Mode:**
-    * In the top-right corner of the Extensions page, turn on the **"Developer mode"** toggle.
+- Create custom workout routines with personalized names and colors
+- **7 Distinguishable Colors**: Blue, Green, Purple, Red, Amber, Cyan, Gray
+- Edit existing routines with inline editing
+- Delete routines with confirmation dialog
+- **Example Routines**: Strength Training, Cardio Blast, Yoga Flow, HIIT Training, Stretching, Swimming, Rest Day
 
-4.  **Load the Extension:**
-    * Click the **"Load unpacked"** button that appears.
-    * Navigate to the `WorkoutCalendarExtension` folder you created/downloaded.
-    * Select the folder and click "Select Folder" (or "Open").
+### 📅 **Interactive Calendar**
 
-5.  **Done!**
-    * The "Workout Calendar" extension should now appear in your list of extensions.
-    * You should see its icon in the Chrome toolbar (you might need to click the puzzle piece icon to find and pin it).
+- Monthly calendar view with smooth navigation
+- Click any past or current date to log workouts
+- **Visual workout indicators** with colored backgrounds and tooltips
+- **Today's date highlighted** with animated ring
+- Future dates disabled (prevents logging future workouts)
+- **Responsive design** - Perfectly sized for desktop and mobile
 
-## How to Use
+### 🔄 **Smart Workout Selection**
 
-1.  **Open the Calendar:** Click the Workout Calendar extension icon in your Chrome toolbar. This will open the calendar in a new tab.
-2.  **Manage Routines (Left Panel):**
-    * **Add a new routine:** Enter a routine name, pick a color using the color picker, and click "Add Routine."
-    * **View defined routines:** Your created routines will be listed below the form.
-    * **Edit a routine:** Click the "✏️" (pencil) icon next to a routine. The form will populate with its details. Change the name/color and click "Update Routine." Click "Cancel Edit" to discard changes.
-    * **Delete a routine:** Click the "🗑️" (trash) icon next to a routine. This will also remove its logged instances from the calendar.
-3.  **Log a Workout (Center Panel):**
-    * Navigate to the desired month using the "< Prev" and "Next >" buttons.
-    * Click on a specific day in the calendar.
-    * A modal (pop-up) will appear. Select the workout routine you performed from the dropdown.
-    * Click "Save Workout." The day will be colored accordingly.
-    * To remove a workout from a day, click the day, and in the modal, you can either select "-- Select Routine --" and "Save Workout," or click "Remove Workout."
-4.  **View Statistics (Right Panel):**
-    * The "Monthly Statistics" panel shows how many times each routine was logged in the currently displayed month, along with the number of days you didn't log any workout.
-    * These stats update automatically as you log workouts or change months.
+- **Enhanced Modal Interface** for workout selection
+- **Currently selected workout displayed prominently** with visual indicators
+- Easy switching between different workouts
+- **Improved Clear functionality** with larger, more accessible button
+- Color-coded options for easy identification
 
-## Folder Structure
+### 📊 **Workout Statistics**
 
-The extension is organized as follows:
+- **Monthly workout count** - Track your consistency
+- **Current streak** - See your consecutive workout days
+- Real-time updates as you log workouts
+- Visual progress indicators
 
-* `manifest.json`: Defines the extension's properties, permissions, and behavior.
-* `background.js`: Handles the logic for opening the calendar tab when the extension icon is clicked.
-* `calendar.html`: The main HTML file that displays the calendar interface. Contains all the CSS.
-* `calendar.js`: Contains all the JavaScript logic for the calendar's functionality, routine management, and statistics.
-    *(**Note:** Ensure this filename matches the one linked in `calendar.html`)*.
-* `icons/`: Contains the icons for the extension (16x16, 48x48, 128x128 pixels).
+### 💾 **Data Management**
+
+- **Export functionality** - Download your data as JSON backup
+- **Import functionality** - Restore from backup files with preview
+- Import confirmation dialog showing routine and workout counts
+- All data stored locally in browser (no internet required)
+- Data persists between sessions
+
+### 📱 **Modern Responsive Design**
+
+- **Professional sidebar layout** on desktop
+- **Collapsible mobile navigation** for smaller screens
+- **Glass-morphism effects** and smooth animations
+- **Lucide Icons** for consistent, modern iconography
+- **Inter font** for professional typography
+
+## 🛠 Technology Stack
+
+- **HTML5** - Semantic markup structure
+- **Tailwind CSS 3.4.1** - Utility-first CSS framework
+- **DaisyUI 4.12.10** - Component library with theme system
+- **JavaScript (ES6+)** - Vanilla JavaScript with modern class structure
+- **Lucide Icons** - Beautiful, consistent icon set
+- **Google Fonts (Inter)** - Professional typography
+- **Local Storage API** - Client-side data persistence
+
+## 🚀 Getting Started
+
+1. **Clone or download** this repository
+2. **Open `index.html`** in any modern web browser
+3. **Start tracking** your workouts immediately!
+
+No build process, dependencies, or server setup required - just open and use!
+
+## 📖 Usage Guide
+
+### Adding Workout Routines
+
+1. Click the **"Add Routine"** button in the navigation or sidebar
+2. Enter a descriptive routine name (e.g., "Morning Cardio")
+3. Choose from **7 distinguishable colors**
+4. Click **"Save"** to add the routine
+
+### Logging Workouts
+
+1. Click on any **past or current date** on the calendar
+2. **View current selection** if a workout is already logged
+3. Select a different routine or click **"Clear Workout"** to remove
+4. See immediate visual feedback on the calendar
+
+### Managing Your Data
+
+#### Export Data
+
+- Click the **Export** button in navigation
+- Download a timestamped JSON backup file
+- Keep backups of your workout history
+
+#### Import Data
+
+- Click the **Import** button in navigation
+- Select a previously exported JSON file
+- Review the import preview before confirming
+- All current data will be replaced
+
+### Customizing Appearance
+
+- Click the **theme button** (🎨) in the top navigation
+- Choose from **8 beautiful DaisyUI themes**
+- Theme preference automatically saved
+
+## 🎯 Key Features in Detail
+
+### Enhanced Workout Selection
+
+- **Visual current selection** - See exactly what workout is logged
+- **"Currently selected" indicator** with check mark
+- **Easy switching** between different routines
+- **Prominent clear button** for removing workouts
+
+### Professional UI/UX
+
+- **Sidebar layout** keeps routines organized and accessible
+- **Toast notifications** provide immediate feedback
+- **Smooth animations** and hover effects throughout
+- **Consistent spacing** and visual hierarchy
+
+### Data Safety
+
+- **Local storage backup** ensures data persistence
+- **Import/Export system** for data portability
+- **Confirmation dialogs** prevent accidental deletions
+- **Data validation** on import to prevent corruption
+
+## 📱 Browser Compatibility
+
+Works perfectly in all modern browsers supporting:
+
+- ES6+ JavaScript (Classes, Arrow Functions, Template Literals)
+- CSS Grid and Flexbox
+- Local Storage API
+- CSS Custom Properties (Variables)
+- Modern DOM APIs
+
+**Recommended browsers**: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+
+## 📁 Project Structure
+
+```
+WorkoutCalendar/
+│
+├── index.html          # Main application with modern HTML structure
+├── script.js           # Complete JavaScript functionality
+└── README.md          # Project documentation
+```
+
+## 🔧 Advanced Features
+
+### Modern JavaScript Architecture
+
+- **Class-based design** with FitTracker main class
+- **Comprehensive error handling** and data validation
+- **Modular functions** for easy maintenance and extension
+- **Event-driven architecture** for responsive interactions
+
+### Professional Design System
+
+- **Consistent color palette** with 7 distinguishable routine colors
+- **Typography hierarchy** using Inter font family
+- **Spacing system** following design best practices
+- **Accessibility considerations** with proper contrast and sizing
+
+### Performance Optimizations
+
+- **Vanilla JavaScript** for minimal overhead and fast loading
+- **Efficient DOM manipulation** with targeted updates
+- **Local storage optimization** for instant data access
+- **CSS animations** using hardware acceleration
+
+## 🎨 Customization Options
+
+### Adding New Themes
+
+The application uses DaisyUI's theme system. To add custom themes:
+
+1. Follow DaisyUI's theme customization guide
+2. Add new theme options to the theme dropdown in HTML
+3. Themes automatically work with all components
+
+### Extending Functionality
+
+The modular design makes it easy to add features like:
+
+- **Detailed workout tracking** (sets, reps, weight)
+- **Progress photos** and measurements
+- **Workout templates** and programs
+- **Calendar integration** with external services
+- **Social sharing** and progress reports
+
+## 🤝 Contributing
+
+This project welcomes contributions! Areas for improvement:
+
+- Additional theme designs
+- Enhanced statistics and analytics
+- Mobile app companion
+- Integration with fitness APIs
+- Accessibility improvements
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-Enjoy tracking your workouts!
+**Built with ❤️ for fitness enthusiasts who appreciate beautiful, functional web applications.**
+
+_FitTracker - Making workout tracking simple, beautiful, and effective._
+
+```
+WorkoutCalendar/
+│
+├── index.html          # Main HTML structure
+├── styles.css          # Complete CSS with all themes
+├── script.js           # JavaScript functionality
+└── README.md          # This documentation
+```
+
+## Key Features Implementation
+
+### Theme System
+
+- CSS custom properties (variables) for easy theme switching
+- Three distinct, professionally designed color palettes
+- Smooth transitions between themes
+
+### Data Management
+
+- Object-oriented JavaScript design
+- Comprehensive error handling
+- Data validation and sanitization
+- Backup and restore capabilities
+
+### User Experience
+
+- Intuitive interface design
+- Helpful feedback messages
+- Keyboard shortcuts (ESC to close modals)
+- Responsive design for all devices
+
+### Performance
+
+- Vanilla JavaScript for minimal overhead
+- Efficient DOM manipulation
+- Local storage for instant data access
+- Optimized for smooth animations
+
+## Customization
+
+### Adding New Themes
+
+1. Add new CSS custom properties in the `:root` selector
+2. Create a new `[data-theme="your-theme"]` selector
+3. Add the theme option to the HTML select element
+
+### Extending Functionality
+
+The application is built with a modular class structure, making it easy to add new features like:
+
+- Workout statistics
+- Exercise details
+- Import/export to different formats
+- Integration with fitness APIs
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+**Created with ❤️ for fitness enthusiasts who love beautiful, functional web applications.**
