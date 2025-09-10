@@ -11,11 +11,11 @@ class FitTracker {
 
   initializeApp() {
     this.loadFromLocalStorage();
+    this.applyTheme(); // Apply theme first, before rendering
     this.setupEventListeners();
     this.renderCalendar();
     this.renderRoutines();
     this.updateStats();
-    this.applyTheme();
 
     // Initialize with example routines if none exist
     if (this.routines.length === 0) {
