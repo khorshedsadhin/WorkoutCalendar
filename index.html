@@ -3,7 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FitTracker - Workout Calendar</title>
+    <title>FlowFit - Modern Workout Calendar</title>
+    <meta
+      name="description"
+      content="A beautiful, modern workout tracking application with GitHub-style contribution calendar and 9 stunning themes"
+    />
+    <meta
+      name="keywords"
+      content="workout tracker, fitness calendar, exercise planner, modern ui, aesthetic design"
+    />
+    <meta name="author" content="FlowFit" />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231f2937' stroke='%23374151' stroke-width='1'/%3E%3Cpath d='M16 6l-4 10h3l-1 10 4-10h-3l1-10z' fill='white'/%3E%3C/svg%3E"
+      type="image/svg+xml"
+    />
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FlowFit - Modern Workout Calendar" />
+    <meta
+      property="og:description"
+      content="Track your workouts with style using our modern calendar interface featuring 9 themes including GitHub contribution style"
+    />
+    <meta property="og:url" content="https://workoutcalendar.pages.dev/" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="FlowFit - Modern Workout Calendar" />
+    <meta
+      name="twitter:description"
+      content="Beautiful workout tracking with GitHub-style calendar and modern themes"
+    />
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- DaisyUI CDN -->
@@ -68,10 +101,27 @@
       }
 
       .gradient-text {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(
+          135deg,
+          #667eea 0%,
+          #764ba2 50%,
+          #f093fb 100%
+        );
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+        background-size: 200% 200%;
+        animation: gradientShift 3s ease-in-out infinite;
+      }
+
+      @keyframes gradientShift {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
       }
 
       .workout-indicator {
@@ -353,12 +403,12 @@
           </div>
           <div class="flex items-center gap-3">
             <div
-              class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center"
+              class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center border border-gray-700"
             >
-              <i data-lucide="calendar" class="text-white w-5 h-5"></i>
+              <i data-lucide="zap" class="text-white w-5 h-5"></i>
             </div>
             <div>
-              <h1 class="text-xl font-bold gradient-text">FitTracker</h1>
+              <h1 class="text-xl font-bold text-base-content">FlowFit</h1>
               <p class="text-xs text-base-content/60">Workout Calendar</p>
             </div>
           </div>
@@ -492,7 +542,7 @@
         >
           <div class="p-6">
             <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
-              <i data-lucide="dumbbell" class="w-5 h-5 text-primary"></i>
+              <i data-lucide="zap" class="w-5 h-5 text-primary"></i>
               Your Routines
             </h2>
 

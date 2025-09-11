@@ -1,6 +1,6 @@
-# FitTracker - Workout Calendar
+# FlowFit - Modern Workout Calendar ⚡
 
-A beautiful, modern single-page web application for tracking your workout routines with a professional calendar interface. Built with Tailwind CSS and DaisyUI for a sleek, responsive design with **9 stunning themes** including a unique **GitHub contribution graph style**.
+A beautiful, aesthetic single-page web application for tracking your workout routines with a modern calendar interface. Built with Tailwind CSS and DaisyUI for a sleek, responsive design with **9 stunning themes** including a unique **GitHub contribution graph style**.
 
 ## 🌐 Live Demo
 
@@ -288,7 +288,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 **Built with ❤️ for fitness enthusiasts who appreciate beautiful, functional web applications.**
 
-_FitTracker - Making workout tracking simple, beautiful, and effective._
+_FlowFit - Where fitness meets aesthetic design ⚡✨_
 
 ```
 WorkoutCalendar/
@@ -352,3 +352,5 @@ This project is open source and available under the [MIT License](LICENSE).
 ---
 
 **Created with ❤️ for fitness enthusiasts who love beautiful, functional web applications.**
+
+_FlowFit - Where fitness meets aesthetic design ⚡✨_

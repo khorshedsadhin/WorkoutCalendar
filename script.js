@@ -1,4 +1,4 @@
-class FitTracker {
+class FlowFit {
   constructor() {
     this.currentDate = new Date();
     this.selectedDate = null;
@@ -25,13 +25,13 @@ class FitTracker {
 
   initializeExampleRoutines() {
     const exampleRoutines = [
-      { id: "strength", name: "💪 Strength Training", color: "#3b82f6" }, // Blue -> Light green in GitHub theme
-      { id: "cardio", name: "🏃 Cardio Blast", color: "#10b981" }, // Green -> Medium green in GitHub theme
-      { id: "yoga", name: "🧘 Yoga Flow", color: "#8b5cf6" }, // Purple -> Bright green in GitHub theme
-      { id: "hiit", name: "🔥 HIIT Training", color: "#ef4444" }, // Red -> Brightest green in GitHub theme
-      { id: "stretching", name: "🤸 Stretching", color: "#f59e0b" }, // Amber -> GitHub primary green
-      { id: "swimming", name: "🏊 Swimming", color: "#06b6d4" }, // Cyan -> GitHub green variant
-      { id: "rest", name: "😴 Rest Day", color: "#6b7280" }, // Gray -> Dark gray in GitHub theme
+      { id: "strength", name: "⚡ Power Training", color: "#3b82f6" }, // Blue -> Light green in GitHub theme
+      { id: "cardio", name: "� Cardio Flow", color: "#10b981" }, // Green -> Medium green in GitHub theme
+      { id: "yoga", name: "✨ Mindful Movement", color: "#8b5cf6" }, // Purple -> Bright green in GitHub theme
+      { id: "hiit", name: "🔥 Intensity Burst", color: "#ef4444" }, // Red -> Brightest green in GitHub theme
+      { id: "stretching", name: "🌙 Flexibility", color: "#f59e0b" }, // Amber -> GitHub primary green
+      { id: "swimming", name: "💎 Aqua Fitness", color: "#06b6d4" }, // Cyan -> GitHub green variant
+      { id: "rest", name: "☁️ Recovery", color: "#6b7280" }, // Gray -> Dark gray in GitHub theme
     ];
 
     this.routines = exampleRoutines;
@@ -788,7 +788,7 @@ class FitTracker {
   }
 
   applyTheme() {
-    const savedTheme = localStorage.getItem("fittracker-theme") || "light";
+    const savedTheme = localStorage.getItem("flowfit-theme") || "light";
     document.documentElement.setAttribute("data-theme", savedTheme);
 
     // Update theme indicators and color picker after DOM is ready
@@ -815,12 +815,12 @@ class FitTracker {
       routines: this.routines,
       workouts: this.workouts,
     };
-    localStorage.setItem("fittracker-data", JSON.stringify(data));
+    localStorage.setItem("flowfit-data", JSON.stringify(data));
   }
 
   loadFromLocalStorage() {
     try {
-      const data = localStorage.getItem("fittracker-data");
+      const data = localStorage.getItem("flowfit-data");
       if (data) {
         const parsed = JSON.parse(data);
         this.routines = parsed.routines || [];
@@ -943,7 +943,7 @@ function saveRoutine() {
     };
 
     app.routines.push(routine);
-    app.showToast("Routine added! 🎉", "success");
+    app.showToast("Routine added! ✨", "success");
   }
 
   app.saveToLocalStorage();
@@ -954,7 +954,7 @@ function saveRoutine() {
 
 function changeTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
-  localStorage.setItem("fittracker-theme", theme);
+  localStorage.setItem("flowfit-theme", theme);
   updateThemeIndicators(theme);
   updateColorPicker(theme);
 
@@ -1059,9 +1059,7 @@ function exportData() {
 
   const a = document.createElement("a");
   a.href = url;
-  a.download = `fittracker-backup-${
-    new Date().toISOString().split("T")[0]
-  }.json`;
+  a.download = `flowfit-backup-${new Date().toISOString().split("T")[0]}.json`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -1139,5 +1137,5 @@ function importData() {
 // Initialize the application
 let app;
 document.addEventListener("DOMContentLoaded", () => {
-  app = new FitTracker();
+  app = new FlowFit();
 });
