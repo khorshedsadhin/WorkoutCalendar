@@ -445,9 +445,25 @@ class FlowFit {
     // Render workout options
     this.renderWorkoutOptions();
 
-    // Show/hide clear button
+    // Show/hide clear button based on whether a workout is selected
     const clearBtn = document.getElementById("clear-workout-btn");
-    clearBtn.style.display = currentWorkout ? "block" : "none";
+    console.log("Debug - currentWorkout:", currentWorkout, "dateKey:", dateKey);
+
+    // Remove both classes first
+    clearBtn.classList.remove("show", "hide");
+
+    if (
+      currentWorkout &&
+      currentWorkout !== null &&
+      currentWorkout !== undefined &&
+      currentWorkout !== ""
+    ) {
+      console.log("Showing clear button for workout:", currentWorkout);
+      clearBtn.classList.add("show");
+    } else {
+      console.log("Hiding clear button - no workout assigned");
+      clearBtn.classList.add("hide");
+    }
 
     // Show modal
     modal.showModal();
@@ -586,10 +602,12 @@ class FlowFit {
 
     if (this.routines.length === 0) {
       container.innerHTML = `
-        <div class="text-center p-6 text-base-content/60 bg-base-100 rounded-lg border-2 border-dashed border-base-300">
-          <i data-lucide="dumbbell" class="w-8 h-8 mx-auto mb-3 opacity-50"></i>
-          <p class="font-medium">No routines yet</p>
-          <p class="text-xs">Add your first routine below!</p>
+        <div class="text-center p-8 bg-gradient-to-br from-base-100/60 to-base-200/40 backdrop-blur-sm rounded-2xl border-2 border-dashed border-base-content/20 hover:border-primary/30 transition-all duration-300">
+          <div class="w-16 h-16 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center mx-auto mb-4 backdrop-blur-sm border border-primary/20">
+            <i data-lucide="dumbbell" class="w-8 h-8 text-primary/60"></i>
+          </div>
+          <p class="font-semibold text-base text-base-content/80 mb-1">No routines yet</p>
+          <p class="text-sm text-base-content/60">Add your first workout routine below!</p>
         </div>
       `;
       lucide.createIcons();
@@ -606,31 +624,24 @@ class FlowFit {
             : routine.color;
 
         return `
-      <div class="group bg-base-100 rounded-lg border border-base-300 hover:border-primary/30 transition-all duration-200 hover:shadow-sm">
+      <div class="group bg-gradient-to-r from-base-100/80 to-base-100/60 backdrop-blur-sm rounded-xl border border-base-content/10 hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 relative">
         <div class="p-4">
           <div class="flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <div class="w-4 h-4 rounded-full shadow-sm" style="background-color: ${displayColor}"></div>
-              <span class="font-medium text-sm">${this.escapeHtml(
+            <div class="flex items-center gap-4">
+              <div class="relative">
+                <div class="w-3 h-3 rounded-full shadow-lg ring-2 ring-white/50" style="background-color: ${displayColor}"></div>
+                <div class="absolute inset-0 w-3 h-3 rounded-full animate-pulse opacity-30" style="background-color: ${displayColor}"></div>
+              </div>
+              <span class="font-semibold text-base text-base-content/90">${this.escapeHtml(
                 routine.name
               )}</span>
             </div>
-            <div class="dropdown dropdown-end opacity-0 group-hover:opacity-100 transition-opacity">
-              <div tabindex="0" role="button" class="btn btn-ghost btn-xs btn-circle">
-                <i data-lucide="more-vertical" class="w-3 h-3"></i>
-              </div>
-              <ul tabindex="0" class="dropdown-content z-[1] menu p-1 shadow-lg bg-base-100 rounded-box w-32 border border-base-300">
-                <li><a onclick="app.editRoutine('${
-                  routine.id
-                }')" class="text-xs py-2">
-                  <i data-lucide="edit" class="w-3 h-3"></i> Edit
-                </a></li>
-                <li><a onclick="app.deleteRoutine('${
-                  routine.id
-                }')" class="text-xs py-2 text-error">
-                  <i data-lucide="trash-2" class="w-3 h-3"></i> Delete
-                </a></li>
-              </ul>
+            <div class="relative opacity-0 group-hover:opacity-100 transition-all duration-200">
+              <button class="btn btn-ghost btn-sm btn-circle hover:bg-base-200/80 backdrop-blur-sm" onclick="app.toggleRoutineMenu(event, '${
+                routine.id
+              }')">
+                <i data-lucide="more-vertical" class="w-4 h-4"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -640,6 +651,65 @@ class FlowFit {
       .join("");
 
     lucide.createIcons();
+  }
+
+  toggleRoutineMenu(event, routineId) {
+    event.stopPropagation();
+
+    // Remove any existing menu
+    const existingMenu = document.getElementById("routine-context-menu");
+    if (existingMenu) {
+      existingMenu.remove();
+    }
+
+    // Get button position
+    const button = event.target.closest("button");
+    const rect = button.getBoundingClientRect();
+
+    // Create menu
+    const menu = document.createElement("div");
+    menu.id = "routine-context-menu";
+    menu.innerHTML = `
+      <div class="bg-gradient-to-br from-base-100/95 to-base-200/90 backdrop-blur-xl border border-base-content/10 shadow-xl rounded-xl p-2 w-36">
+        <div class="menu">
+          <div onclick="app.editRoutine('${routineId}'); app.closeRoutineMenu();" class="text-sm py-2.5 px-3 rounded-lg hover:bg-base-200/60 transition-all duration-200 flex items-center gap-3 cursor-pointer">
+            <i data-lucide="edit" class="w-4 h-4"></i> Edit
+          </div>
+          <div onclick="app.deleteRoutine('${routineId}'); app.closeRoutineMenu();" class="text-sm py-2.5 px-3 rounded-lg hover:bg-error/10 text-error transition-all duration-200 flex items-center gap-3 cursor-pointer">
+            <i data-lucide="trash-2" class="w-4 h-4"></i> Delete
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Position menu
+    menu.style.cssText = `
+      position: fixed;
+      top: ${rect.bottom + 5}px;
+      left: ${rect.left - 120}px;
+      z-index: 10000;
+      pointer-events: auto;
+    `;
+
+    // Add to body
+    document.body.appendChild(menu);
+
+    // Add icons
+    lucide.createIcons();
+
+    // Close menu when clicking outside
+    setTimeout(() => {
+      document.addEventListener("click", this.closeRoutineMenu.bind(this), {
+        once: true,
+      });
+    }, 0);
+  }
+
+  closeRoutineMenu() {
+    const menu = document.getElementById("routine-context-menu");
+    if (menu) {
+      menu.remove();
+    }
   }
 
   editRoutine(id) {

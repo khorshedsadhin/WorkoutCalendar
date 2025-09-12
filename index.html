@@ -55,7 +55,595 @@
 
     <style>
       * {
-        font-family: "Inter", sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+          "Inter", sans-serif;
+      }
+
+      /* Apple-inspired Design Enhancement (works with DaisyUI themes) */
+
+      /* Clear, readable Apple-style enhancements */
+      .apple-glass {
+        backdrop-filter: blur(2px);
+        background: hsl(var(--b1) / 0.98);
+        border: 1px solid hsl(var(--bc) / 0.2);
+        box-shadow: 0 2px 8px hsl(var(--bc) / 0.15);
+      }
+      .apple-card {
+        backdrop-filter: blur(8px);
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .apple-card:hover {
+        transform: translateY(-1px);
+      }
+
+      .apple-btn {
+        transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .apple-btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .apple-shadow {
+        box-shadow: 0 2px 8px hsla(var(--bc) / 0.1);
+      }
+
+      .apple-shadow:hover {
+        box-shadow: 0 4px 16px hsla(var(--bc) / 0.15);
+      }
+
+      /* Fix dropdown z-index and add blur effect */
+      .dropdown-content {
+        z-index: 99999 !important;
+        position: absolute !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
+          0 0 0 1px rgba(255, 255, 255, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+      }
+
+      /* Dropdown positioning */
+      .dropdown.dropdown-end .dropdown-content {
+        right: 0 !important;
+        left: auto !important;
+        top: 100% !important;
+        margin-top: 8px !important;
+      }
+
+      .dropdown .dropdown-content {
+        top: 100% !important;
+        margin-top: 8px !important;
+      }
+
+      /* Enhanced blur effect for dark themes */
+      [data-theme="dark"] .dropdown-content,
+      [data-theme="dracula"] .dropdown-content,
+      [data-theme="github"] .dropdown-content {
+        background: rgba(30, 30, 30, 0.95) !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6),
+          0 0 0 1px rgba(255, 255, 255, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+      }
+
+      /* Smooth animation for dropdown appearance */
+      .dropdown-content {
+        animation: dropdownFadeIn 0.2s ease-out !important;
+      }
+
+      @keyframes dropdownFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Ensure proper navbar alignment */
+      .navbar {
+        position: relative;
+        width: 100%;
+        max-width: 100vw;
+        overflow: hidden;
+        padding: 0 1rem;
+        box-sizing: border-box;
+      }
+
+      .navbar-start {
+        flex: 0 0 auto;
+        min-width: 0;
+      }
+
+      .navbar-center {
+        flex: 1 1 auto;
+        display: flex;
+        justify-content: center;
+        min-width: 0;
+      }
+
+      .navbar-end {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        min-width: 0;
+      }
+
+      /* Fix any potential flex alignment issues */
+      .dropdown {
+        position: relative;
+      }
+
+      /* Prevent horizontal scrolling */
+      body,
+      html {
+        overflow-x: hidden;
+        max-width: 100vw;
+      }
+
+      /* Fix navbar z-index and styling */
+      .navbar {
+        z-index: 1000 !important;
+        position: relative;
+        border-radius: 0 0 20px 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Desktop navbar adjustments - Simple and clean */
+      @media (min-width: 1024px) {
+        .navbar {
+          padding: 0 1.5rem;
+        }
+
+        .navbar-center {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+        }
+
+        .navbar-center ul.menu-horizontal {
+          flex-direction: row;
+          align-items: center;
+          gap: 1rem;
+          flex-wrap: nowrap !important;
+        }
+
+        .navbar-center .menu-horizontal li a {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.5rem 1rem;
+          border-radius: 0.5rem;
+          transition: all 0.2s ease;
+          color: var(--fallback-bc, oklch(var(--bc) / 1));
+        }
+
+        .navbar-center .menu-horizontal li a:hover {
+          background-color: var(--fallback-b2, oklch(var(--b2) / 1));
+        }
+
+        .navbar-end {
+          display: flex;
+          align-items: center;
+        }
+      } /* Mobile responsive adjustments */
+      @media (max-width: 1023px) {
+        .navbar {
+          padding: 0 1rem;
+        }
+
+        /* Fix mobile hamburger dropdown positioning */
+        .navbar-start .dropdown .dropdown-content {
+          left: 0;
+          right: auto;
+          top: 100%;
+          position: absolute;
+          width: 13rem;
+          margin-top: 8px;
+        }
+
+        .navbar-start .dropdown {
+          display: block;
+        }
+
+        .navbar-start .btn-circle {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
+      /* Mobile hamburger dropdown styling */
+      .navbar-start .dropdown:focus-within .dropdown-content {
+        display: block;
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .menu-sm.dropdown-content {
+        z-index: 9999;
+        position: absolute;
+        backdrop-filter: blur(12px);
+        background: var(--fallback-b1, oklch(var(--b1) / 0.95));
+        border: 1px solid var(--fallback-bc, oklch(var(--bc) / 0.2));
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        padding: 12px;
+      }
+
+      /* Mobile menu dark theme support */
+      [data-theme="dark"] .menu-sm.dropdown-content,
+      [data-theme="dracula"] .menu-sm.dropdown-content,
+      [data-theme="github"] .menu-sm.dropdown-content {
+        background: var(--fallback-b1, oklch(var(--b1) / 0.9));
+        border-color: var(--fallback-bc, oklch(var(--bc) / 0.3));
+      }
+
+      /* Ensure dropdowns are interactive and visible */
+      .dropdown:focus-within .dropdown-content,
+      .dropdown.dropdown-open .dropdown-content,
+      .dropdown [tabindex]:focus ~ .dropdown-content {
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        pointer-events: auto !important;
+        display: block !important;
+      }
+
+      .dropdown-content {
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(-10px);
+        pointer-events: none;
+        transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        display: none;
+      }
+
+      /* Force theme dropdown to be visible when focused */
+      .navbar-end .dropdown:focus-within .dropdown-content {
+        visibility: visible !important;
+        opacity: 1 !important;
+        display: block !important;
+        transform: translateY(0) !important;
+      }
+
+      /* Fix navbar overflow issue - allow dropdown to extend beyond navbar */
+      .navbar {
+        overflow: visible;
+        position: relative;
+      }
+
+      /* Clean dropdown styling - click/focus only */
+      .dropdown:focus-within .dropdown-content {
+        display: block;
+        visibility: visible;
+        opacity: 1;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        z-index: 9999;
+        margin-top: 8px;
+      }
+
+      .dropdown-content {
+        background: var(--fallback-b1, oklch(var(--b1) / 0.95));
+        border: 1px solid var(--fallback-bc, oklch(var(--bc) / 0.2));
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        min-width: 200px;
+        padding: 12px;
+        backdrop-filter: blur(12px);
+      }
+
+      /* Dark theme support */
+      [data-theme="dark"] .dropdown-content,
+      [data-theme="github"] .dropdown-content,
+      [data-theme="dracula"] .dropdown-content {
+        background: var(--fallback-b1, oklch(var(--b1) / 0.9));
+        border-color: var(--fallback-bc, oklch(var(--bc) / 0.3));
+      }
+
+      /* Fix routine dropdown z-index issues */
+      #routines-list .dropdown {
+        position: static !important;
+      }
+
+      #routines-list .dropdown-content {
+        position: fixed !important;
+        z-index: 9999 !important;
+        transform: translateX(-100%) !important;
+        margin-top: 0 !important;
+      }
+
+      #routines-list .dropdown.dropdown-end .dropdown-content {
+        position: fixed !important;
+        z-index: 9999 !important;
+        right: 20px !important;
+        transform: none !important;
+      }
+
+      /* Ensure sidebar doesn't create stacking context issues */
+      .sidebar-container {
+        position: relative;
+        z-index: 1;
+        overflow: visible !important;
+      }
+
+      /* Override any overflow hidden on parent containers */
+      #routines-list {
+        overflow: visible !important;
+      }
+
+      /* Ensure buttons are clickable */
+      .btn {
+        pointer-events: auto !important;
+        cursor: pointer !important;
+      }
+
+      .dropdown [tabindex] {
+        cursor: pointer !important;
+      }
+
+      /* Add New Routine Button - Enhanced visibility for all themes */
+      .add-routine-btn {
+        background: linear-gradient(
+          135deg,
+          #007aff 0%,
+          #0051d5 100%
+        ) !important;
+        color: white !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4),
+          0 2px 4px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      .add-routine-btn:hover {
+        background: linear-gradient(
+          135deg,
+          #0056cc 0%,
+          #003d99 100%
+        ) !important;
+        box-shadow: 0 6px 16px rgba(0, 122, 255, 0.5),
+          0 2px 6px rgba(0, 0, 0, 0.15) !important;
+        transform: translateY(-1px) !important;
+      }
+
+      .add-routine-btn:active {
+        transform: translateY(0) !important;
+        box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3),
+          0 1px 3px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      /* Theme-specific overrides for better visibility */
+      [data-theme="luxury"] .add-routine-btn {
+        background: linear-gradient(
+          135deg,
+          #ff6b6b 0%,
+          #e63946 100%
+        ) !important;
+        box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4),
+          0 2px 4px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      [data-theme="luxury"] .add-routine-btn:hover {
+        background: linear-gradient(
+          135deg,
+          #e63946 0%,
+          #d00000 100%
+        ) !important;
+        box-shadow: 0 6px 16px rgba(255, 107, 107, 0.5),
+          0 2px 6px rgba(0, 0, 0, 0.15) !important;
+      }
+
+      [data-theme="cupcake"] .add-routine-btn {
+        background: linear-gradient(
+          135deg,
+          #ec4899 0%,
+          #db2777 100%
+        ) !important;
+        box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4),
+          0 2px 4px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      [data-theme="valentine"] .add-routine-btn {
+        background: linear-gradient(
+          135deg,
+          #f472b6 0%,
+          #ec4899 100%
+        ) !important;
+        box-shadow: 0 4px 12px rgba(244, 114, 182, 0.4),
+          0 2px 4px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      /* Fix Clear Workout Button Alignment */
+      #clear-workout-btn {
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        padding: 8px 16px !important;
+        min-height: 40px !important;
+        line-height: 1 !important;
+      }
+
+      #clear-workout-btn.show {
+        display: flex !important;
+      }
+
+      #clear-workout-btn.hide {
+        display: none !important;
+      }
+
+      #clear-workout-btn i {
+        flex-shrink: 0 !important;
+        width: 16px !important;
+        height: 16px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+
+      #clear-workout-btn span {
+        display: inline-block !important;
+        vertical-align: middle !important;
+        line-height: 1.2 !important;
+        font-weight: 500 !important;
+      }
+
+      /* Apple-style scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: hsla(var(--bc) / 0.3);
+        border-radius: 3px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: hsla(var(--bc) / 0.4);
+      }
+
+      /* macOS Glass Effect */
+      .macos-glass {
+        backdrop-filter: blur(20px);
+        background: var(--macos-bg-secondary);
+        border: 1px solid var(--macos-border);
+        box-shadow: var(--macos-shadow);
+      }
+
+      .macos-glass-light {
+        backdrop-filter: blur(20px);
+        background: var(--macos-bg-tertiary);
+        border: 1px solid var(--macos-border);
+        box-shadow: var(--macos-shadow-sm);
+      }
+
+      /* macOS Window Style */
+      .macos-window {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.08),
+          0 8px 24px rgba(0, 0, 0, 0.12);
+      }
+
+      /* macOS Button Styles */
+      .macos-btn {
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--macos-border);
+      }
+
+      .macos-btn-primary {
+        background: var(--macos-blue);
+        color: white;
+        border: none;
+        box-shadow: 0 1px 3px rgba(0, 122, 255, 0.3);
+      }
+
+      .macos-btn-primary:hover {
+        background: #0056cc;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 122, 255, 0.4);
+      }
+
+      .macos-btn-secondary {
+        background: var(--macos-bg-tertiary);
+        color: var(--macos-text);
+      }
+
+      .macos-btn-secondary:hover {
+        background: var(--macos-bg-secondary);
+        transform: translateY(-1px);
+      }
+
+      /* macOS Card Style */
+      .macos-card {
+        background: var(--macos-bg-secondary);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--macos-border);
+        border-radius: 12px;
+        box-shadow: var(--macos-shadow-sm);
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .macos-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--macos-shadow);
+      }
+
+      /* macOS Calendar Day Styling */
+      .calendar-day {
+        background: var(--macos-bg-tertiary);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--macos-border);
+        border-radius: 10px;
+        transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        color: var(--macos-text);
+      }
+
+      .calendar-day:hover {
+        background: var(--macos-bg-secondary);
+        transform: translateY(-1px);
+        box-shadow: var(--macos-shadow-sm);
+      }
+
+      /* macOS Typography */
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: var(--macos-text);
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      /* macOS Focus States */
+      .macos-btn:focus,
+      .macos-card:focus,
+      input:focus,
+      select:focus {
+        outline: 2px solid var(--macos-blue);
+        outline-offset: 2px;
+      }
+
+      /* macOS Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
+
+      [data-theme="dark"] ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.3);
       }
 
       .calendar-grid {
@@ -382,7 +970,7 @@
             </div>
             <ul
               tabindex="0"
-              class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              class="menu menu-sm dropdown-content mt-3 z-[9999] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
                 <a onclick="openRoutineModal()"
@@ -417,17 +1005,17 @@
         <div class="navbar-center hidden lg:flex">
           <ul class="menu menu-horizontal px-1">
             <li>
-              <a onclick="openRoutineModal()" class="btn btn-ghost"
+              <a onclick="openRoutineModal()"
                 ><i data-lucide="plus" class="w-4 h-4"></i> Add Routine</a
               >
             </li>
             <li>
-              <a onclick="exportData()" class="btn btn-ghost"
+              <a onclick="exportData()"
                 ><i data-lucide="download" class="w-4 h-4"></i> Export</a
               >
             </li>
             <li>
-              <a onclick="importData()" class="btn btn-ghost"
+              <a onclick="importData()"
                 ><i data-lucide="upload" class="w-4 h-4"></i> Import</a
               >
             </li>
@@ -439,10 +1027,7 @@
             <div tabindex="0" role="button" class="btn btn-circle btn-ghost">
               <i data-lucide="palette" class="w-5 h-5"></i>
             </div>
-            <ul
-              tabindex="0"
-              class="dropdown-content z-[1] menu p-2 shadow-lg bg-base-100 rounded-box w-48"
-            >
+            <ul tabindex="0" class="dropdown-content menu p-3 rounded-2xl w-48">
               <li class="menu-title">Themes</li>
               <li>
                 <a
@@ -538,49 +1123,91 @@
       <div class="flex-1 flex">
         <!-- Sidebar -->
         <div
-          class="w-80 bg-base-200/50 backdrop-blur-sm border-r border-base-200 hidden lg:flex flex-col"
+          class="w-80 bg-gradient-to-b from-base-100/60 to-base-200/40 backdrop-blur-xl border-r border-base-content/10 hidden lg:flex flex-col"
         >
           <div class="p-6">
-            <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
-              <i data-lucide="zap" class="w-5 h-5 text-primary"></i>
-              Your Routines
-            </h2>
+            <div class="mb-6">
+              <h2 class="text-lg font-bold mb-1 flex items-center gap-3">
+                <div
+                  class="w-7 h-7 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg flex items-center justify-center backdrop-blur-sm border border-primary/20"
+                >
+                  <i data-lucide="zap" class="w-3.5 h-3.5 text-primary"></i>
+                </div>
+                <span
+                  class="bg-gradient-to-r from-base-content to-base-content/70 bg-clip-text text-transparent"
+                  >Your Routines</span
+                >
+              </h2>
+              <p class="text-xs text-base-content/60 ml-10">
+                Manage your workout routines
+              </p>
+            </div>
 
-            <div id="routines-list" class="space-y-3 mb-6">
+            <div id="routines-list" class="space-y-2 mb-6">
               <!-- Routines will be rendered here -->
             </div>
 
-            <button onclick="openRoutineModal()" class="btn btn-primary w-full">
+            <button
+              onclick="openRoutineModal()"
+              class="add-routine-btn w-full font-semibold py-2.5 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 backdrop-blur-sm"
+            >
               <i data-lucide="plus" class="w-4 h-4"></i>
               Add New Routine
             </button>
           </div>
 
           <!-- Stats Section -->
-          <div class="p-6 mt-auto bg-base-100/50">
-            <h3 class="font-semibold mb-3 flex items-center gap-2">
-              <i data-lucide="trending-up" class="w-4 h-4 text-success"></i>
-              This Month
-            </h3>
-            <div class="grid grid-cols-2 gap-3">
-              <div
-                class="stat-box bg-success/10 border border-success/20 rounded-lg p-3"
-              >
-                <div
-                  class="text-2xl font-bold text-success"
-                  id="workouts-count"
-                >
-                  0
-                </div>
-                <div class="text-xs text-success/70">Workouts</div>
+          <div class="p-6 mt-auto">
+            <div
+              class="bg-gradient-to-br from-base-100/60 to-base-200/40 backdrop-blur-xl rounded-2xl p-5 border border-base-content/10 shadow-lg"
+            >
+              <div class="mb-4">
+                <h3 class="font-bold text-base mb-1 flex items-center gap-3">
+                  <div
+                    class="w-6 h-6 bg-gradient-to-br from-success/20 to-success/10 rounded-lg flex items-center justify-center backdrop-blur-sm border border-success/20"
+                  >
+                    <i
+                      data-lucide="trending-up"
+                      class="w-3 h-3 text-success"
+                    ></i>
+                  </div>
+                  <span
+                    class="bg-gradient-to-r from-base-content to-base-content/70 bg-clip-text text-transparent"
+                    >This Month</span
+                  >
+                </h3>
+                <p class="text-xs text-base-content/60 ml-9">
+                  Your monthly progress
+                </p>
               </div>
-              <div
-                class="stat-box bg-primary/10 border border-primary/20 rounded-lg p-3"
-              >
-                <div class="text-2xl font-bold text-primary" id="streak-count">
-                  0
+
+              <div class="grid grid-cols-2 gap-2">
+                <div
+                  class="bg-gradient-to-br from-success/10 to-success/5 backdrop-blur-sm border border-success/20 rounded-xl p-3 shadow-sm hover:shadow-md transition-all duration-200"
+                >
+                  <div
+                    class="text-xl font-bold text-success mb-1"
+                    id="workouts-count"
+                  >
+                    0
+                  </div>
+                  <div class="text-xs font-medium text-success/70">
+                    Workouts
+                  </div>
                 </div>
-                <div class="text-xs text-primary/70">Day Streak</div>
+                <div
+                  class="bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur-sm border border-primary/20 rounded-xl p-3 shadow-sm hover:shadow-md transition-all duration-200"
+                >
+                  <div
+                    class="text-xl font-bold text-primary mb-1"
+                    id="streak-count"
+                  >
+                    0
+                  </div>
+                  <div class="text-xs font-medium text-primary/70">
+                    Day Streak
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -594,7 +1221,7 @@
               <div class="flex items-center justify-between mb-4">
                 <button
                   id="prev-month"
-                  class="btn btn-circle btn-outline hover:btn-primary"
+                  class="btn btn-circle btn-outline hover:btn-primary apple-btn"
                 >
                   <i data-lucide="chevron-left" class="w-5 h-5"></i>
                 </button>
@@ -608,7 +1235,7 @@
 
                 <button
                   id="next-month"
-                  class="btn btn-circle btn-outline hover:btn-primary"
+                  class="btn btn-circle btn-outline hover:btn-primary apple-btn"
                 >
                   <i data-lucide="chevron-right" class="w-5 h-5"></i>
                 </button>
@@ -620,7 +1247,7 @@
           <div class="flex-1 p-6 overflow-auto">
             <div class="max-w-4xl mx-auto">
               <div
-                class="bg-base-100 rounded-2xl shadow-sm border border-base-200 p-6"
+                class="bg-base-100 rounded-2xl shadow-sm border border-base-200 p-6 apple-card"
               >
                 <!-- Day Headers -->
                 <div class="calendar-grid mb-4">
@@ -756,11 +1383,11 @@
 
         <div class="modal-action">
           <form method="dialog">
-            <button class="btn btn-ghost">Cancel</button>
+            <button class="btn btn-ghost apple-btn">Cancel</button>
           </form>
           <button
             id="save-routine-btn"
-            class="btn btn-primary"
+            class="btn btn-primary apple-btn"
             onclick="saveRoutine()"
           >
             <i data-lucide="save" class="w-4 h-4"></i>
@@ -794,12 +1421,12 @@
         <div class="flex gap-2 justify-end">
           <button
             id="clear-workout-btn"
-            class="btn btn-error"
+            class="btn btn-error flex items-center justify-center gap-2"
             onclick="app.clearWorkout()"
             style="display: none"
           >
             <i data-lucide="trash-2" class="w-4 h-4"></i>
-            Clear Workout
+            <span>Clear Workout</span>
           </button>
         </div>
       </div>
