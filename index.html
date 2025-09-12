@@ -646,6 +646,35 @@
         background: rgba(255, 255, 255, 0.3);
       }
 
+      /* Calendar container sizing - constrained for non-GitHub themes */
+      .calendar-header-container {
+        max-width: 56rem; /* equivalent to max-w-4xl */
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .calendar-container {
+        max-width: 56rem; /* equivalent to max-w-4xl */
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      /* Full width for GitHub theme */
+      [data-theme="github"] .calendar-header-container,
+      [data-theme="github"] .calendar-container {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Responsive adjustments for smaller screens */
+      @media (max-width: 640px) {
+        .calendar-header-container,
+        .calendar-container {
+          padding: 0 0.5rem;
+        }
+      }
+
       .calendar-grid {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
@@ -1040,43 +1069,56 @@
         border: 1px solid #30363d;
       }
 
-      /* GitHub Two-Month Calendar Layout */
+      /* GitHub Theme - Apple-Style Two-Month Calendar */
       .github-two-month-calendar {
         width: 100%;
-        padding: 20px;
+        padding: 48px 32px;
+        background: linear-gradient(
+          145deg,
+          rgba(30, 30, 30, 0.85),
+          rgba(20, 20, 20, 0.9)
+        );
+        backdrop-filter: blur(28px) saturate(200%);
+        border-radius: 32px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        margin: 0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 8px 32px rgba(0, 0, 0, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
       }
 
       .github-months-container {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 0px;
-        max-width: 1200px;
+        gap: 48px;
+        width: 100%;
+        max-width: 1100px;
         margin: 0 auto;
       }
 
       .github-month {
-        background: #0d1117;
-        border-radius: 0px;
-        padding: 30px;
-        border: none;
-      }
-
-      .github-month:first-child {
-        border-radius: 0px;
-        border: none;
-      }
-
-      .github-month:last-child {
-        border-radius: 0px;
-        border: none;
+        background: linear-gradient(
+          145deg,
+          rgba(40, 40, 42, 0.6),
+          rgba(28, 28, 30, 0.8)
+        );
+        backdrop-filter: blur(20px) saturate(180%);
+        border-radius: 24px;
+        padding: 32px 28px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08);
       }
 
       .github-month-title {
-        color: #f0f6fc;
+        color: rgba(255, 255, 255, 0.95);
         font-size: 22px;
-        font-weight: 600;
-        margin: 0 0 20px 0;
+        font-weight: 700;
+        margin: 0 0 24px 0;
         text-align: center;
+        letter-spacing: -0.4px;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+          system-ui, sans-serif;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
       }
 
       .github-month-grid {
@@ -1086,22 +1128,29 @@
       .github-weekdays {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: 4px;
-        margin-bottom: 12px;
+        gap: 8px;
+        margin-bottom: 20px;
+        padding: 0 6px;
       }
 
       .github-weekday {
-        color: #8b949e;
+        color: rgba(255, 255, 255, 0.65);
         font-size: 12px;
-        font-weight: 500;
+        font-weight: 700;
         text-align: center;
-        padding: 10px 4px;
+        padding: 10px 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui,
+          sans-serif;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
       }
 
       .github-days {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: 4px;
+        gap: 6px;
+        padding: 0 4px;
       }
 
       .github-day {
@@ -1109,62 +1158,102 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 20%;
+        border-radius: 12px;
         font-size: 14px;
         font-weight: 500;
         cursor: pointer;
-        transition: all 0.2s ease;
-        min-height: 40px;
-        margin: 2px;
-        color: #f0f6fc;
+        transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        min-height: 42px;
+        color: rgba(242, 242, 247, 0.8);
+        background: rgba(58, 58, 60, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui,
+          sans-serif;
       }
 
       .github-day:hover {
-        transform: scale(1.1);
-        z-index: 10;
-        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+        background: rgba(72, 72, 74, 0.6);
+        border-color: rgba(0, 122, 255, 0.4);
+        color: rgba(242, 242, 247, 0.95);
+        transition: all 0.2s ease;
       }
 
       .github-day-empty {
         background: transparent !important;
+        border: none !important;
         cursor: default;
         pointer-events: none;
+        color: transparent;
       }
 
       .github-day-today {
-        outline: 2px solid #f78166;
-        outline-offset: 1px;
+        background: rgba(0, 122, 255, 0.8) !important;
+        border-color: rgba(0, 122, 255, 0.6) !important;
+        color: white !important;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+      }
+
+      .github-day-today:hover {
+        background: rgba(0, 86, 204, 0.9) !important;
+        box-shadow: 0 3px 8px rgba(0, 122, 255, 0.4);
+        transition: all 0.2s ease;
       }
 
       .github-day-future {
-        opacity: 0.5;
+        opacity: 0.4;
         cursor: not-allowed;
+        background: rgba(58, 58, 60, 0.2) !important;
+        border-color: rgba(255, 255, 255, 0.02) !important;
       }
 
-      /* GitHub contribution levels for calendar days */
+      /* Apple-Style Workout Intensity Levels */
       .github-level-0 {
-        background-color: #161b22;
-        border: 1px solid #30363d;
+        background: rgba(58, 58, 60, 0.3) !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        color: rgba(242, 242, 247, 0.6);
       }
 
       .github-level-1 {
-        background-color: #0e4429;
-        border: 1px solid #0e4429;
+        background: rgba(48, 209, 88, 0.3) !important;
+        border: 1px solid rgba(48, 209, 88, 0.4) !important;
+        color: white !important;
+        font-weight: 600;
+        box-shadow: 0 2px 6px rgba(48, 209, 88, 0.2);
       }
 
       .github-level-2 {
-        background-color: #006d32;
-        border: 1px solid #006d32;
+        background: rgba(48, 209, 88, 0.5) !important;
+        border: 1px solid rgba(48, 209, 88, 0.6) !important;
+        color: white !important;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(48, 209, 88, 0.3);
       }
 
       .github-level-3 {
-        background-color: #26a641;
-        border: 1px solid #26a641;
+        background: rgba(48, 209, 88, 0.7) !important;
+        border: 1px solid rgba(48, 209, 88, 0.8) !important;
+        color: white !important;
+        font-weight: 600;
+        box-shadow: 0 3px 10px rgba(48, 209, 88, 0.4);
       }
 
       .github-level-4 {
-        background-color: #39d353;
-        border: 1px solid #39d353;
+        background: rgba(48, 209, 88, 0.9) !important;
+        border: 1px solid rgba(48, 209, 88, 1) !important;
+        color: white !important;
+        font-weight: 700;
+        box-shadow: 0 4px 12px rgba(48, 209, 88, 0.5);
+      }
+
+      /* Workout level hover effects - simplified */
+      .github-level-1:hover,
+      .github-level-2:hover,
+      .github-level-3:hover,
+      .github-level-4:hover {
+        opacity: 0.8;
+        transition: opacity 0.2s ease;
       }
 
       /* Override normal calendar grid when GitHub theme is active */
@@ -1178,14 +1267,76 @@
       }
 
       /* Responsive design for smaller screens */
-      @media (max-width: 768px) {
+      @media (max-width: 1024px) {
         .github-months-container {
-          grid-template-columns: 1fr;
-          gap: 20px;
+          gap: 32px;
+          max-width: 900px;
+        }
+
+        .github-month {
+          padding: 28px 24px;
         }
 
         .github-two-month-calendar {
-          padding: 10px;
+          padding: 40px 24px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .github-months-container {
+          grid-template-columns: 1fr;
+          gap: 28px;
+          max-width: 500px;
+        }
+
+        .github-two-month-calendar {
+          padding: 32px 20px;
+          margin: 0;
+        }
+
+        .github-month {
+          padding: 24px 20px;
+        }
+
+        .github-month-title {
+          font-size: 20px;
+          margin-bottom: 20px;
+        }
+
+        .github-weekday {
+          font-size: 11px;
+          padding: 8px 4px;
+        }
+
+        .github-day {
+          width: 36px !important;
+          height: 36px !important;
+          font-size: 13px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .github-two-month-calendar {
+          padding: 24px 16px;
+        }
+
+        .github-month {
+          padding: 20px 16px;
+        }
+
+        .github-day {
+          width: 32px !important;
+          height: 32px !important;
+          font-size: 12px;
+        }
+
+        .github-weekdays {
+          gap: 6px;
+          padding: 0 4px;
+        }
+
+        .github-month-grid {
+          gap: 6px !important;
         }
       }
     </style>
@@ -1450,7 +1601,7 @@
         <div class="flex-1 flex flex-col">
           <!-- Calendar Header -->
           <div class="p-6 pb-4">
-            <div class="max-w-4xl mx-auto">
+            <div class="calendar-header-container">
               <div class="flex items-center justify-between">
                 <button
                   id="prev-month"
@@ -1476,7 +1627,7 @@
 
           <!-- Calendar Grid -->
           <div class="flex-1 p-6 overflow-auto">
-            <div class="max-w-4xl mx-auto">
+            <div class="calendar-container">
               <!-- Day Headers -->
               <div class="calendar-grid mb-4">
                 <div
