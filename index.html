@@ -723,71 +723,304 @@
         border: 1px solid rgba(0, 0, 0, 0.1);
       }
 
-      /* GitHub Theme - Custom CSS */
+      /* GitHub Theme - Clean Apple Design */
       [data-theme="github"] {
-        --primary: #238636;
-        --primary-focus: #2ea043;
+        --primary: #007aff;
+        --primary-focus: #0056cc;
         --primary-content: #ffffff;
-        --secondary: #656d76;
-        --secondary-focus: #8b949e;
+        --secondary: #8e8e93;
+        --secondary-focus: #6d6d70;
         --secondary-content: #ffffff;
-        --accent: #0969da;
-        --accent-focus: #0550ae;
+        --accent: #30d158;
+        --accent-focus: #28a745;
         --accent-content: #ffffff;
-        --neutral: #21262d;
-        --neutral-focus: #30363d;
-        --neutral-content: #f0f6fc;
-        --base-100: #0d1117;
-        --base-200: #161b22;
-        --base-300: #21262d;
-        --base-content: #f0f6fc;
-        --info: #0969da;
+        --neutral: #1c1c1e;
+        --neutral-focus: #2c2c2e;
+        --neutral-content: #f2f2f7;
+        --base-100: #000000;
+        --base-200: #1c1c1e;
+        --base-300: #2c2c2e;
+        --base-content: #f2f2f7;
+        --info: #007aff;
         --info-content: #ffffff;
-        --success: #238636;
+        --success: #30d158;
         --success-content: #ffffff;
-        --warning: #bf8700;
+        --warning: #ff9f0a;
         --warning-content: #ffffff;
-        --error: #da3633;
+        --error: #ff3b30;
         --error-content: #ffffff;
       }
 
-      /* GitHub contribution-style calendar styling */
-      [data-theme="github"] .calendar-day {
-        border: 1px solid #30363d;
-        border-radius: 4px; /* Slightly rounded */
-        color: #8b949e;
-        font-size: 12px;
-        font-weight: 600;
+      /* GitHub Theme - Clean Apple Interface */
+      [data-theme="github"] .navbar {
+        background: rgba(0, 0, 0, 0.8) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) !important;
       }
 
-      /* Empty days background - only for days without workouts */
+      [data-theme="github"] .bg-gradient-to-b {
+        background: rgba(28, 28, 30, 0.7) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+      }
+
+      [data-theme="github"] .bg-gradient-to-br {
+        background: rgba(28, 28, 30, 0.6) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+      }
+
+      [data-theme="github"] .bg-gradient-to-r {
+        background: rgba(28, 28, 30, 0.8) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+      }
+
+      [data-theme="github"] .apple-card,
+      [data-theme="github"] .bg-base-100 {
+        background: rgba(28, 28, 30, 0.8) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+      }
+
+      [data-theme="github"] .apple-card:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
+        border-color: rgba(0, 122, 255, 0.3) !important;
+      }
+
+      [data-theme="github"] .apple-btn {
+        background: rgba(0, 122, 255, 1) !important;
+        backdrop-filter: none !important;
+        border: none !important;
+        box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3) !important;
+        transition: all 0.2s ease !important;
+      }
+
+      [data-theme="github"] .apple-btn:hover {
+        transform: translateY(-1px) !important;
+        background: rgba(0, 86, 204, 1) !important;
+        box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4) !important;
+      }
+
+      /* GitHub Theme Apple-Style Add New Routine Button */
+      [data-theme="github"] .add-routine-btn {
+        background: rgba(48, 209, 88, 1) !important;
+        border: none !important;
+        box-shadow: 0 2px 8px rgba(48, 209, 88, 0.3) !important;
+        backdrop-filter: none !important;
+        transition: all 0.2s ease !important;
+        border-radius: 12px !important;
+      }
+
+      [data-theme="github"] .add-routine-btn:hover {
+        background: rgba(40, 167, 69, 1) !important;
+        box-shadow: 0 4px 12px rgba(48, 209, 88, 0.4) !important;
+        transform: translateY(-1px) !important;
+      }
+
+      /* GitHub Theme Routine Cards - Clean Apple Design */
+      [data-theme="github"] .group {
+        background: rgba(44, 44, 46, 0.8) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+        transition: all 0.2s ease !important;
+        border-radius: 16px !important;
+      }
+
+      [data-theme="github"] .group:hover {
+        transform: translateY(-1px) !important;
+        border-color: rgba(255, 255, 255, 0.2) !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+      }
+
+      /* GitHub Theme - Clean Apple-Style Calendar */
+      [data-theme="github"] .calendar-day {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: rgba(242, 242, 247, 0.6);
+        font-size: 13px;
+        font-weight: 500;
+        backdrop-filter: blur(10px) saturate(180%);
+        transition: all 0.2s ease;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Empty days - Clean Apple style */
       [data-theme="github"] .calendar-day:not([style*="background-color"]) {
-        background: #161b22; /* GitHub empty contribution color */
+        background: rgba(44, 44, 46, 0.6);
+        backdrop-filter: blur(10px) saturate(180%);
       }
 
       [data-theme="github"] .calendar-day:hover {
-        border-color: #656d76;
+        border-color: rgba(0, 122, 255, 0.4);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
       }
 
-      /* GitHub theme - empty days hover effect */
+      /* Empty days hover - Clean transition */
       [data-theme="github"]
         .calendar-day:not([style*="background-color"]):hover {
-        background: #21262d; /* Slightly lighter on hover for empty days */
+        background: rgba(58, 58, 60, 0.8);
+        backdrop-filter: blur(15px) saturate(180%);
       }
 
-      /* GitHub contribution intensity levels - for workout days */
+      /* Workout days - Apple-style highlighting */
       [data-theme="github"] .calendar-day[style*="background-color"] {
-        border-color: #30363d;
-        color: #ffffff; /* White text on green backgrounds */
+        border-color: rgba(48, 209, 88, 0.4);
+        color: #ffffff;
+        backdrop-filter: blur(10px) saturate(180%);
+        box-shadow: 0 2px 6px rgba(48, 209, 88, 0.2);
+        font-weight: 600;
       }
 
-      /* GitHub theme sidebar and UI adjustments */
+      [data-theme="github"] .calendar-day[style*="background-color"]:hover {
+        transform: translateY(-1px) scale(1.05);
+        box-shadow: 0 4px 12px rgba(48, 209, 88, 0.3);
+        border-color: rgba(48, 209, 88, 0.6);
+      }
+
+      /* GitHub theme sidebar and UI adjustments with Apple Design */
       [data-theme="github"] .bg-base-200\/50 {
-        background: rgba(33, 38, 45, 0.5) !important;
+        background: linear-gradient(
+          135deg,
+          rgba(22, 27, 34, 0.6) 0%,
+          rgba(33, 38, 45, 0.4) 100%
+        ) !important;
+        backdrop-filter: blur(15px) saturate(120%) !important;
       }
 
       [data-theme="github"] .border-base-200 {
-        border-color: #30363d !important;
+        border-color: rgba(139, 148, 158, 0.2) !important;
+      }
+
+      /* GitHub Theme Apple-Style Stats Cards */
+      [data-theme="github"] .bg-gradient-to-br.from-success\/10 {
+        background: linear-gradient(
+          135deg,
+          rgba(35, 134, 54, 0.15) 0%,
+          rgba(46, 160, 67, 0.1) 100%
+        ) !important;
+        backdrop-filter: blur(10px) saturate(120%) !important;
+        border: 1px solid rgba(35, 134, 54, 0.2) !important;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+      }
+
+      [data-theme="github"] .bg-gradient-to-br.from-primary\/10 {
+        background: linear-gradient(
+          135deg,
+          rgba(9, 105, 218, 0.15) 0%,
+          rgba(5, 80, 174, 0.1) 100%
+        ) !important;
+        backdrop-filter: blur(10px) saturate(120%) !important;
+        border: 1px solid rgba(9, 105, 218, 0.2) !important;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+      }
+
+      [data-theme="github"] .bg-gradient-to-br:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+      }
+
+      /* GitHub Theme Apple-Style Dropdown */
+      [data-theme="github"] .dropdown-content {
+        background: linear-gradient(
+          135deg,
+          rgba(13, 17, 23, 0.95) 0%,
+          rgba(22, 27, 34, 0.9) 100%
+        ) !important;
+        backdrop-filter: blur(20px) saturate(150%) !important;
+        border: 1px solid rgba(139, 148, 158, 0.2) !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+        border-radius: 12px !important;
+      }
+
+      /* GitHub Theme Apple-Style Modal */
+      [data-theme="github"] .modal-box {
+        background: linear-gradient(
+          135deg,
+          rgba(13, 17, 23, 0.95) 0%,
+          rgba(22, 27, 34, 0.9) 100%
+        ) !important;
+        backdrop-filter: blur(20px) saturate(150%) !important;
+        border: 1px solid rgba(139, 148, 158, 0.2) !important;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+        border-radius: 20px !important;
+      }
+
+      /* GitHub Theme - Final Clean Design Touches */
+      [data-theme="github"] .text-base-content {
+        color: rgba(242, 242, 247, 0.9) !important;
+      }
+
+      [data-theme="github"] .text-base-content\/60 {
+        color: rgba(242, 242, 247, 0.6) !important;
+      }
+
+      [data-theme="github"] .text-base-content\/70 {
+        color: rgba(242, 242, 247, 0.7) !important;
+      }
+
+      [data-theme="github"] .text-base-content\/90 {
+        color: rgba(242, 242, 247, 0.9) !important;
+      }
+
+      [data-theme="github"] .bg-base-200\/50 {
+        background: rgba(44, 44, 46, 0.6) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+      }
+
+      [data-theme="github"] .border-base-200 {
+        border-color: rgba(255, 255, 255, 0.1) !important;
+      }
+
+      /* GitHub Theme - Fix Sidebar Header Visibility */
+      [data-theme="github"] .bg-gradient-to-r.from-base-content {
+        background: linear-gradient(
+          90deg,
+          rgba(242, 242, 247, 0.9) 0%,
+          rgba(242, 242, 247, 0.7) 100%
+        ) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
+      }
+
+      /* GitHub Theme - Clean Calendar Styling */
+      [data-theme="github"] .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+        padding: 20px;
+        background: rgba(44, 44, 46, 0.3);
+        border-radius: 16px;
+        backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* GitHub Theme - Calendar Header Buttons */
+      [data-theme="github"] .btn-circle.btn-ghost {
+        background: rgba(44, 44, 46, 0.6) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        color: rgba(242, 242, 247, 0.8) !important;
+        backdrop-filter: blur(10px) !important;
+      }
+
+      [data-theme="github"] .btn-circle.btn-ghost:hover {
+        background: rgba(0, 122, 255, 0.8) !important;
+        border-color: rgba(0, 122, 255, 0.4) !important;
+        color: white !important;
+        transform: translateY(-1px) !important;
+      }
+
+      /* GitHub Theme - Month Title */
+      [data-theme="github"] #current-month-year {
+        color: rgba(242, 242, 247, 0.9) !important;
+        font-weight: 600 !important;
+        letter-spacing: -0.5px !important;
       }
 
       /* GitHub contribution graph tooltip styling */
@@ -1216,26 +1449,24 @@
         <!-- Calendar Area -->
         <div class="flex-1 flex flex-col">
           <!-- Calendar Header -->
-          <div class="bg-base-100 border-b border-base-200 p-6">
+          <div class="p-6 pb-4">
             <div class="max-w-4xl mx-auto">
-              <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center justify-between">
                 <button
                   id="prev-month"
-                  class="btn btn-circle btn-outline hover:btn-primary apple-btn"
+                  class="btn btn-circle btn-ghost hover:btn-primary apple-btn"
                 >
                   <i data-lucide="chevron-left" class="w-5 h-5"></i>
                 </button>
 
-                <div class="text-center">
-                  <h2 id="current-month-year" class="text-3xl font-bold"></h2>
-                  <p class="text-base-content/60">
-                    Click any day to log your workout
-                  </p>
-                </div>
+                <h2
+                  id="current-month-year"
+                  class="text-2xl font-bold text-base-content"
+                ></h2>
 
                 <button
                   id="next-month"
-                  class="btn btn-circle btn-outline hover:btn-primary apple-btn"
+                  class="btn btn-circle btn-ghost hover:btn-primary apple-btn"
                 >
                   <i data-lucide="chevron-right" class="w-5 h-5"></i>
                 </button>
@@ -1246,52 +1477,48 @@
           <!-- Calendar Grid -->
           <div class="flex-1 p-6 overflow-auto">
             <div class="max-w-4xl mx-auto">
-              <div
-                class="bg-base-100 rounded-2xl shadow-sm border border-base-200 p-6 apple-card"
-              >
-                <!-- Day Headers -->
-                <div class="calendar-grid mb-4">
-                  <div
-                    class="text-center font-semibold text-sm text-base-content/70 py-2"
-                  >
-                    Sun
-                  </div>
-                  <div
-                    class="text-center font-semibold text-sm text-base-content/70 py-2"
-                  >
-                    Mon
-                  </div>
-                  <div
-                    class="text-center font-semibold text-sm text-base-content/70 py-2"
-                  >
-                    Tue
-                  </div>
-                  <div
-                    class="text-center font-semibold text-sm text-base-content/70 py-2"
-                  >
-                    Wed
-                  </div>
-                  <div
-                    class="text-center font-semibold text-sm text-base-content/70 py-2"
-                  >
-                    Thu
-                  </div>
-                  <div
-                    class="text-center font-semibold text-sm text-base-content/70 py-2"
-                  >
-                    Fri
-                  </div>
-                  <div
-                    class="text-center font-semibold text-sm text-base-content/70 py-2"
-                  >
-                    Sat
-                  </div>
+              <!-- Day Headers -->
+              <div class="calendar-grid mb-4">
+                <div
+                  class="text-center font-semibold text-sm text-base-content/70 py-2"
+                >
+                  Sun
                 </div>
+                <div
+                  class="text-center font-semibold text-sm text-base-content/70 py-2"
+                >
+                  Mon
+                </div>
+                <div
+                  class="text-center font-semibold text-sm text-base-content/70 py-2"
+                >
+                  Tue
+                </div>
+                <div
+                  class="text-center font-semibold text-sm text-base-content/70 py-2"
+                >
+                  Wed
+                </div>
+                <div
+                  class="text-center font-semibold text-sm text-base-content/70 py-2"
+                >
+                  Thu
+                </div>
+                <div
+                  class="text-center font-semibold text-sm text-base-content/70 py-2"
+                >
+                  Fri
+                </div>
+                <div
+                  class="text-center font-semibold text-sm text-base-content/70 py-2"
+                >
+                  Sat
+                </div>
+              </div>
 
-                <!-- Calendar Days -->
-                <div id="calendar-days" class="calendar-grid">
-                  <!-- Days will be rendered here -->
-                </div>
+              <!-- Calendar Days -->
+              <div id="calendar-days" class="calendar-grid">
+                <!-- Days will be rendered here -->
               </div>
             </div>
           </div>
